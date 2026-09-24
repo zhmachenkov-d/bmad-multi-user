@@ -1,0 +1,3 @@
+# Soft-claim ownership registry (AD-8). Story ids match sprint-status keys.
+# Soft-check only; never hard-locks git. SoT is this file, not planning-artifacts/team/.
+{}
