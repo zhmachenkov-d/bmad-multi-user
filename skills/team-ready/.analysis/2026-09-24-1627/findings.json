@@ -1,0 +1,215 @@
+{
+  "schema_version": 2,
+  "subject": "/workspaces/bmad-multi-user/skills/team-ready",
+  "generated": "2026-09-24T13:30:55Z",
+  "verdict": "Solid lean mutator with clean script placement; high findings cluster on Overview heading and incomplete headless propose/memlog contracts.",
+  "grade": "fair",
+  "summary": "team-ready is a tight set/propose skill with correct intelligence placement (frontmatter via script) and a right-sized customize.toml. Highest leverage fixes: add ## Overview, define headless propose as recommendation-only JSON with memlog audit trail, and surface soft_offer in headless set returns. The .memlog.md path-scan hit conflicts with builder process-memory conventions \u2014 do not move it into references/.",
+  "standards": {
+    "canon": "/workspaces/bmad-multi-user/.agents/skills/bmad-workflow-builder/references/prompt-quality-canon.md",
+    "principles": "/workspaces/bmad-multi-user/.agents/skills/bmad-workflow-builder/references/skill-quality-principles.md",
+    "scripts": "/workspaces/bmad-multi-user/.agents/skills/bmad-workflow-builder/references/script-standards.md"
+  },
+  "themes": [
+    {
+      "title": "Incomplete headless contracts",
+      "root_cause": "Set documents headless JSON; Propose and assumption logging do not, so automators dead-end or lose audit trail.",
+      "finding_ids": [
+        "architecture-3",
+        "architecture-4",
+        "enhancement-1",
+        "enhancement-2",
+        "enhancement-3"
+      ],
+      "action": "Specify headless propose as recommendation-only JSON; wire memlog.py for assumptions; add soft_offer on PRD\u2192ready set returns."
+    },
+    {
+      "title": "Section contract vs destination prose",
+      "root_cause": "Destination content exists but is not under ## Overview, so integrity scanners and agents looking for the standard heading miss it.",
+      "finding_ids": [
+        "architecture-1"
+      ],
+      "action": "Rename/promote the opening destination block to ## Overview."
+    },
+    {
+      "title": "Builder memlog vs path topology",
+      "root_cause": "Path-standards forbids non-SKILL.md markdown at root; workflow-builder keeps .memlog.md at skill root as process memory.",
+      "finding_ids": [
+        "architecture-2"
+      ],
+      "action": "Leave .memlog.md at root for this build; prefer scanner exclude for .memlog.md rather than relocating process memory."
+    },
+    {
+      "title": "Light prose density",
+      "root_cause": "Small restatements between Outcome/Constraints/Propose numbering.",
+      "finding_ids": [
+        "leanness-1",
+        "leanness-2",
+        "leanness-3",
+        "enhancement-4"
+      ],
+      "action": "Trim Constraints duplication, keep soft-offer only in Set, collapse Propose to a goal sentence, optional skip-confirm when explicit."
+    }
+  ],
+  "strengths": [
+    "Deterministic frontmatter get/set isolated in artifact_status.py with tests",
+    "customize.toml universal-only is correct for an in-place mutator; SKILL.md reads {workflow.*}",
+    "Clear set vs propose intents; soft-offer team-drift without auto-start",
+    "SKILL.md well under token budget (~876)"
+  ],
+  "recommendations": [
+    {
+      "rank": 1,
+      "action": "Add ## Overview and harden headless propose + memlog + soft_offer JSON in one pass",
+      "resolves": [
+        "architecture-1",
+        "architecture-3",
+        "architecture-4",
+        "enhancement-1",
+        "enhancement-2",
+        "enhancement-3"
+      ]
+    },
+    {
+      "rank": 2,
+      "action": "Trim leanness restatements (Constraints/Bar/Propose numbering)",
+      "resolves": [
+        "leanness-1",
+        "leanness-2",
+        "leanness-3"
+      ]
+    },
+    {
+      "rank": 3,
+      "action": "Leave .memlog.md; note path-scan false conflict for builder memlog",
+      "resolves": [
+        "architecture-2"
+      ]
+    },
+    {
+      "rank": 4,
+      "action": "Optional: skip interactive confirm when path+status already explicit",
+      "resolves": [
+        "enhancement-4"
+      ]
+    }
+  ],
+  "experience": {
+    "journeys": [
+      {
+        "name": "Interactive set",
+        "steps": "Activate \u2192 pick artifact \u2192 confirm status \u2192 script set \u2192 report \u2192 soft-offer team-drift if PRD ready"
+      },
+      {
+        "name": "Interactive propose",
+        "steps": "Activate \u2192 judge \u2192 recommend \u2192 wait accept \u2192 Set"
+      },
+      {
+        "name": "Headless set",
+        "steps": "Infer intent \u2192 script set \u2192 JSON complete (needs memlog/soft_offer fields)"
+      }
+    ],
+    "headless": "Set path is sketched; Propose and assumption audit trail are incomplete for automators."
+  },
+  "findings": [
+    {
+      "id": "leanness-1",
+      "lens": "leanness",
+      "severity": "low",
+      "title": "Constraints restates Outcome bar",
+      "location": "SKILL.md:Constraints",
+      "evidence": "Constraints repeats allowed statuses and --actor already in Outcome/Bar.",
+      "recommendation": "Keep only non-bar rules in Constraints (legacy mapping, no sidecar, no locks/vendor edits)."
+    },
+    {
+      "id": "leanness-2",
+      "lens": "leanness",
+      "severity": "low",
+      "title": "Soft-offer team-drift lives in Bar and Set",
+      "location": "SKILL.md:Outcome; SKILL.md:Set",
+      "evidence": "Soft-offer appears in Bar and Set step 4.",
+      "recommendation": "Remove soft-offer from Outcome Bar; keep in Set with do-not-auto-start."
+    },
+    {
+      "id": "leanness-3",
+      "lens": "leanness",
+      "severity": "low",
+      "title": "Propose numbering is decoration",
+      "location": "SKILL.md:Propose",
+      "evidence": "1-2-3 list for one obligation.",
+      "recommendation": "Collapse Propose to one goal sentence."
+    },
+    {
+      "id": "architecture-1",
+      "lens": "architecture",
+      "severity": "high",
+      "title": "Missing ## Overview section",
+      "location": "SKILL.md",
+      "evidence": "Destination prose under # team-ready; integrity pre-pass flags Missing ## Overview.",
+      "recommendation": "Promote opening block into ## Overview."
+    },
+    {
+      "id": "architecture-2",
+      "lens": "architecture",
+      "severity": "high",
+      "title": "Markdown file at skill root",
+      "location": ".memlog.md",
+      "evidence": "Path-standards fails on .memlog.md at root.",
+      "recommendation": "Builder process memory belongs at skill root per workflow-builder; treat scanner hit as known conflict \u2014 do not move to references/. Prefer excluding .memlog.md from path scan long-term."
+    },
+    {
+      "id": "architecture-3",
+      "lens": "architecture",
+      "severity": "high",
+      "title": "Headless Propose has no executable path",
+      "location": "SKILL.md:Propose",
+      "evidence": "Propose waits for accept; no headless JSON path.",
+      "recommendation": "Headless propose: recommendation-only JSON, no write; or mark propose interactive-only and blocked."
+    },
+    {
+      "id": "architecture-4",
+      "lens": "architecture",
+      "severity": "medium",
+      "title": "Headless assumption trail not wired",
+      "location": "SKILL.md:On Activation / Set",
+      "evidence": "Says log assumption but no memlog.py path in JSON.",
+      "recommendation": "Append via memlog.py; include memlog path in headless JSON."
+    },
+    {
+      "id": "enhancement-1",
+      "lens": "enhancement",
+      "severity": "high",
+      "title": "Add headless memlog for assumptions",
+      "location": "SKILL.md:On Activation; Set",
+      "evidence": "No memlog init/append for headless assumptions; JSON omits memlog path.",
+      "recommendation": "Wire memlog.py for headless assumptions; return memlog path."
+    },
+    {
+      "id": "enhancement-2",
+      "lens": "enhancement",
+      "severity": "high",
+      "title": "Define headless propose contract",
+      "location": "SKILL.md:Propose",
+      "evidence": "Propose accept-gated; headless JSON only under Set.",
+      "recommendation": "Headless propose recommendation-only JSON; apply via separate set."
+    },
+    {
+      "id": "enhancement-3",
+      "lens": "enhancement",
+      "severity": "medium",
+      "title": "Surface team-drift soft-offer in headless JSON",
+      "location": "SKILL.md:Set",
+      "evidence": "Interactive soft-offer not in headless schema.",
+      "recommendation": "Add soft_offer: team-drift when PRD newly ready; do not auto-start."
+    },
+    {
+      "id": "enhancement-4",
+      "lens": "enhancement",
+      "severity": "low",
+      "title": "Skip Set confirm when utterance fully explicit",
+      "location": "SKILL.md:Set step 2",
+      "evidence": "Always confirms interactively even when path+status explicit.",
+      "recommendation": "Skip confirm when both named; keep when ambiguous."
+    }
+  ]
+}

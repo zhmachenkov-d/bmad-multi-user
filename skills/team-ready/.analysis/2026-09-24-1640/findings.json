@@ -1,0 +1,125 @@
+{
+  "schema_version": 2,
+  "subject": "/workspaces/bmad-multi-user/skills/team-ready",
+  "generated": "2026-09-24T13:42:45Z",
+  "verdict": "Stable good: zero highs; remaining mediums are polish (drop Constraints ceremony, open-floor, script-failure stop).",
+  "grade": "good",
+  "summary": "Third analyze: prior headless/Overview highs stay cleared. Architecture, determinism, and customization remain clean. Leftover work is density and graceful failure\u2014not structural risk. Ship-ready with optional polish.",
+  "standards": {
+    "canon": "/workspaces/bmad-multi-user/.agents/skills/bmad-workflow-builder/references/prompt-quality-canon.md",
+    "principles": "/workspaces/bmad-multi-user/.agents/skills/bmad-workflow-builder/references/skill-quality-principles.md",
+    "scripts": "/workspaces/bmad-multi-user/.agents/skills/bmad-workflow-builder/references/script-standards.md"
+  },
+  "themes": [
+    {
+      "title": "Ceremony left in Constraints",
+      "root_cause": "Constraints duplicates Overview/Propose after remediations.",
+      "finding_ids": [
+        "leanness-1",
+        "leanness-2"
+      ],
+      "action": "Fold no-hard-locks into Overview; delete Constraints; light failure-framing."
+    },
+    {
+      "title": "Graceful entry and script failure",
+      "root_cause": "Happy-path headless is solid; vague entry and script errors need one more rule each.",
+      "finding_ids": [
+        "enhancement-1",
+        "enhancement-2",
+        "enhancement-3"
+      ],
+      "action": "Open-floor when vague; blocked on script failure; fence blocked JSON."
+    }
+  ],
+  "strengths": [
+    "Zero high/critical after remediations",
+    "Headless set/propose contracts + multi-candidate + propose cues in place",
+    "Clean script/prompt boundary and customize.toml wiring",
+    "Integrity Overview pass"
+  ],
+  "recommendations": [
+    {
+      "rank": 1,
+      "action": "Delete Constraints; fold no-hard-locks into Overview; add script-failure blocked + fenced blocked JSON",
+      "resolves": [
+        "leanness-1",
+        "enhancement-2",
+        "enhancement-3"
+      ]
+    },
+    {
+      "rank": 2,
+      "action": "Optional open-floor when underspecified; reframe Never as failure-why",
+      "resolves": [
+        "enhancement-1",
+        "leanness-2"
+      ]
+    }
+  ],
+  "experience": {
+    "journeys": [
+      {
+        "name": "Headless set explicit",
+        "steps": "path+status \u2192 script set \u2192 JSON complete (+ soft_offer if PRD ready)"
+      },
+      {
+        "name": "Headless propose",
+        "steps": "cues \u2192 recommendation JSON \u2192 separate set to apply"
+      },
+      {
+        "name": "Interactive vague",
+        "steps": "could use one open-floor dump (optional polish)"
+      }
+    ],
+    "headless": "Ready when inputs explicit; script failure and blocked schema polish remain optional."
+  },
+  "findings": [
+    {
+      "id": "leanness-1",
+      "lens": "leanness",
+      "severity": "medium",
+      "title": "Constraints section is restatement ceremony",
+      "location": "SKILL.md:Constraints",
+      "evidence": "Constraints largely repeats Overview/Propose; unique bit is no hard locks.",
+      "recommendation": "Delete Constraints; fold no hard locks into Overview Bar.",
+      "proposed_smallest": "Overview Bar includes no hard locks; Propose keeps legacy remap; no Constraints.",
+      "predicted_delta": "No material change on set/propose if Overview/Propose carry the rules."
+    },
+    {
+      "id": "leanness-2",
+      "lens": "leanness",
+      "severity": "low",
+      "title": "Stacked Never without failure why",
+      "location": "SKILL.md",
+      "evidence": "Never invent / never silent / do not write shout compliance.",
+      "recommendation": "Reframe each as the failure it guards."
+    },
+    {
+      "id": "enhancement-1",
+      "lens": "enhancement",
+      "severity": "medium",
+      "title": "Open-floor when underspecified",
+      "location": "SKILL.md:On Activation",
+      "evidence": "Vague invoke serializes asks; no single dump invite.",
+      "recommendation": "One adaptive open-floor when intent/target underspecified; skip when explicit."
+    },
+    {
+      "id": "enhancement-2",
+      "lens": "enhancement",
+      "severity": "medium",
+      "title": "Script/path failure \u2192 stop or blocked",
+      "location": "SKILL.md:Set",
+      "evidence": "Missing path/status covered; script ok:false / file-not-found after supplied path not.",
+      "recommendation": "On get/set non-ok: interactive stop; headless blocked + reason + memlog."
+    },
+    {
+      "id": "enhancement-3",
+      "lens": "enhancement",
+      "severity": "low",
+      "title": "Document headless blocked JSON",
+      "location": "SKILL.md:Set",
+      "evidence": "complete schemas fenced; blocked is prose-only.",
+      "recommendation": "Add minimal blocked JSON example beside complete schemas."
+    }
+  ]
+}

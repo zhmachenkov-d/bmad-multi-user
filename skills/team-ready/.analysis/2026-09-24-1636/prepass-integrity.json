@@ -1,0 +1,65 @@
+{
+  "scanner": "workflow-integrity-prepass",
+  "script": "prepass-workflow-integrity.py",
+  "version": "1.0.0",
+  "skill_path": "/workspaces/bmad-multi-user/skills/team-ready",
+  "timestamp": "2026-09-24T13:36:54.740361+00:00",
+  "status": "pass",
+  "metadata": {
+    "frontmatter": {
+      "name": "team-ready",
+      "description": "Set artifact ready lifecycle. Use when the user says 'set ready', 'mark PRD ready', 'propose artifact status', or wants draft/review/ready on PRD UX or Architecture."
+    },
+    "sections": [
+      {
+        "level": 2,
+        "title": "Overview",
+        "line": 8
+      },
+      {
+        "level": 2,
+        "title": "Resolution rules",
+        "line": 14
+      },
+      {
+        "level": 2,
+        "title": "On Activation",
+        "line": 20
+      },
+      {
+        "level": 2,
+        "title": "Set",
+        "line": 29
+      },
+      {
+        "level": 2,
+        "title": "Propose",
+        "line": 49
+      },
+      {
+        "level": 2,
+        "title": "Constraints",
+        "line": 68
+      }
+    ],
+    "workflow_type": "simple-workflow"
+  },
+  "stage_summary": {
+    "total_stages": 0,
+    "referenced": [],
+    "actual": [],
+    "missing_stages": [],
+    "orphaned_stages": []
+  },
+  "prompt_details": [],
+  "issues": [],
+  "summary": {
+    "total_issues": 0,
+    "by_severity": {
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    }
+  }
+}

@@ -1,0 +1,13 @@
+# DO NOT EDIT -- overwritten on every update.
+#
+# Workflow customization surface for team-gates.
+# Team overrides:     {project-root}/_bmad/custom/team-gates.toml
+# Personal overrides: {project-root}/_bmad/custom/team-gates.user.toml
+
+[workflow]
+
+# --- Universal defaults. Merge: scalars override, arrays append. ---
+activation_steps_prepend = []
+activation_steps_append = []
+persistent_facts = []
+on_complete = ""

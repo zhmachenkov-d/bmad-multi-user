@@ -1,0 +1,147 @@
+{
+  "schema_version": 2,
+  "subject": "/workspaces/bmad-multi-user/skills/team-ready",
+  "generated": "2026-09-24T13:38:54Z",
+  "verdict": "Upgraded from fair: Overview and headless propose/memlog/soft_offer land; remaining high is incomplete headless set inputs; else low polish.",
+  "grade": "good",
+  "summary": "Re-analyze after rank-1 fixes: architecture, determinism, and customization are clean; integrity Overview passes. One high finding remains\u2014block headless set when path or status is missing. Medium opportunities: propose judgment cues and multi-artifact disambiguation. Path-scan still flags builder .memlog.md (accepted conflict).",
+  "standards": {
+    "canon": "/workspaces/bmad-multi-user/.agents/skills/bmad-workflow-builder/references/prompt-quality-canon.md",
+    "principles": "/workspaces/bmad-multi-user/.agents/skills/bmad-workflow-builder/references/skill-quality-principles.md",
+    "scripts": "/workspaces/bmad-multi-user/.agents/skills/bmad-workflow-builder/references/script-standards.md"
+  },
+  "themes": [
+    {
+      "title": "Headless incomplete inputs",
+      "root_cause": "Interactive Set guards missing path/status; headless does not yet refuse the write.",
+      "finding_ids": [
+        "enhancement-1"
+      ],
+      "action": "Add blocked JSON when headless set lacks path or status."
+    },
+    {
+      "title": "Judgment defaults for propose/pick",
+      "root_cause": "Propose and artifact identity lack short default rules under ambiguity.",
+      "finding_ids": [
+        "enhancement-2",
+        "enhancement-3"
+      ],
+      "action": "Add readiness cues and zero/many candidate rules."
+    },
+    {
+      "title": "Residual prose density",
+      "root_cause": "Non-write and Constraints still carry light restatement.",
+      "finding_ids": [
+        "leanness-1",
+        "leanness-2",
+        "leanness-3"
+      ],
+      "action": "One-pass trim of Propose/Constraints."
+    }
+  ],
+  "strengths": [
+    "## Overview present; workflow-integrity pass",
+    "Headless propose recommendation-only with memlog; soft_offer on PRD\u2192ready",
+    "Script/prompt intelligence boundary clean; customize.toml right-sized",
+    "Prior fair-grade highs on Overview/headless contracts cleared"
+  ],
+  "recommendations": [
+    {
+      "rank": 1,
+      "action": "Block headless set when path or status missing",
+      "resolves": [
+        "enhancement-1"
+      ]
+    },
+    {
+      "rank": 2,
+      "action": "Add propose cues + multi-candidate pick rules",
+      "resolves": [
+        "enhancement-2",
+        "enhancement-3"
+      ]
+    },
+    {
+      "rank": 3,
+      "action": "Trim Propose/Constraints restatements",
+      "resolves": [
+        "leanness-1",
+        "leanness-2",
+        "leanness-3"
+      ]
+    }
+  ],
+  "experience": {
+    "journeys": [
+      {
+        "name": "Interactive set",
+        "steps": "Activate \u2192 artifact \u2192 set via script \u2192 soft-offer team-drift if PRD ready"
+      },
+      {
+        "name": "Headless propose",
+        "steps": "Recommend status JSON only; apply via separate set"
+      },
+      {
+        "name": "Headless set",
+        "steps": "Needs explicit path+status or should blocked (gap: enhancement-1)"
+      }
+    ],
+    "headless": "Propose and audit trail in place; incomplete set inputs still need an explicit blocked path."
+  },
+  "findings": [
+    {
+      "id": "leanness-1",
+      "lens": "leanness",
+      "severity": "low",
+      "title": "Propose restates non-write three times",
+      "location": "SKILL.md:Propose",
+      "evidence": "without writing / never write / apply via separate set.",
+      "recommendation": "Keep one non-write rule; drop redundant phrasing."
+    },
+    {
+      "id": "leanness-2",
+      "lens": "leanness",
+      "severity": "low",
+      "title": "Constraints points at --help",
+      "location": "SKILL.md:Constraints",
+      "evidence": "--help bullet re-teaches tool fluency.",
+      "recommendation": "Delete the --help bullet."
+    },
+    {
+      "id": "leanness-3",
+      "lens": "leanness",
+      "severity": "low",
+      "title": "Sidecar ban is negative space",
+      "location": "SKILL.md:Constraints",
+      "evidence": "Sidecar clause restates Overview frontmatter bar.",
+      "recommendation": "Drop sidecar clause."
+    },
+    {
+      "id": "enhancement-1",
+      "lens": "enhancement",
+      "severity": "high",
+      "title": "Headless incomplete set \u2192 blocked",
+      "location": "SKILL.md:Set",
+      "evidence": "Headless missing path/status can invent a write; no blocked parallel to interactive confirm.",
+      "recommendation": "If headless and path or status missing/ambiguous: do not write; emit blocked + reason + memlog."
+    },
+    {
+      "id": "enhancement-2",
+      "lens": "enhancement",
+      "severity": "medium",
+      "title": "Propose readiness cues",
+      "location": "SKILL.md:Propose",
+      "evidence": "No testable judgment rubric for draft/review/ready.",
+      "recommendation": "Add 3\u20135 one-line cues for consistent proposals."
+    },
+    {
+      "id": "enhancement-3",
+      "lens": "enhancement",
+      "severity": "medium",
+      "title": "Multi-candidate artifact disambiguation",
+      "location": "SKILL.md:On Activation",
+      "evidence": "No rule when zero/many PRD/UX/ARCH candidates.",
+      "recommendation": "Zero/many: ask interactive or blocked headless; never invent active."
+    }
+  ]
+}

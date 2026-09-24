@@ -1,0 +1,86 @@
+{
+  "schema_version": 2,
+  "subject": "/workspaces/bmad-multi-user/skills/team-gates",
+  "generated": "2026-09-24",
+  "verdict": "Upgraded from fair: prior remediations cleared; remaining are known .memlog.md scanner conflict plus two medium soft-offer/headless polish opportunities.",
+  "grade": "good",
+  "summary": "team-gates now has a coherent soft-gate contract: define/check/order share blocked envelopes, check soft-offers define and team-ready with headless soft_offer, and Define is un-numbered. Determinism, customization, and leanness pass clean. Left: path-standards flag on builder .memlog.md (leave), and optional extension of soft-offers / multi-story headless check docs.",
+  "standards": {
+    "canon": "/workspaces/bmad-multi-user/.agents/skills/bmad-workflow-builder/references/prompt-quality-canon.md",
+    "principles": "/workspaces/bmad-multi-user/.agents/skills/bmad-workflow-builder/references/skill-quality-principles.md",
+    "scripts": "/workspaces/bmad-multi-user/.agents/skills/bmad-workflow-builder/references/script-standards.md"
+  },
+  "themes": [
+    {
+      "title": "Optional soft-offer / multi-story polish",
+      "root_cause": "Core soft-offers cover undefined and status blockers; map-missing and depends_on reasons, plus all-stories check without --story, lack the same handoff/docs depth.",
+      "finding_ids": ["enhancement-1", "enhancement-2"],
+      "action": "Optionally map remaining reason classes to soft_offers and document the no-story headless check shape (or require --story headless)."
+    },
+    {
+      "title": "Builder memlog vs path scanner",
+      "root_cause": "Workflow-builder keeps process .memlog.md at skill root; path-standards flags it. Not a runtime defect.",
+      "finding_ids": ["architecture-1"],
+      "action": "Leave .memlog.md at root; long-term exclude from path-standards scanner."
+    }
+  ],
+  "strengths": [
+    "Prior fair findings resolved: soft-offer define/team-ready, soft_offer in headless check, blocked JSON for define/order, Define bullets.",
+    "Determinism split clean; customize.toml wired; leanness under budget (~1426 tokens).",
+    "Overview bar still holds: undefined ≠ pass, soft only, gates.json via script."
+  ],
+  "recommendations": [
+    {
+      "rank": 1,
+      "action": "Optional polish: extend check soft-offers for map-missing and depends_on; document multi-story headless check or require --story.",
+      "resolves": ["enhancement-1", "enhancement-2"]
+    },
+    {
+      "rank": 2,
+      "action": "Keep .memlog.md at skill root (builder resume); treat architecture-1 as known scanner conflict.",
+      "resolves": ["architecture-1"]
+    }
+  ],
+  "experience": {
+    "journeys": [
+      {
+        "name": "Check undefined story",
+        "steps": "check → undefined → soft-offer define → define writes gate → re-check."
+      },
+      {
+        "name": "Headless gate consumer",
+        "steps": "check with story id → complete/blocked JSON with optional soft_offer."
+      }
+    ],
+    "headless": "Ready for single-story check/define/order; multi-story check without --story is the remaining doc gap."
+  },
+  "findings": [
+    {
+      "id": "architecture-1",
+      "lens": "architecture",
+      "severity": "high",
+      "title": "Prompt markdown at skill root",
+      "location": "skills/team-gates/.memlog.md",
+      "evidence": "Path-standards: Prompt file at skill root `.memlog.md`. Builder process memory for resume; runtime audit memlog is `{planning_artifacts}/team/.memlog.md`.",
+      "recommendation": "Leave at root (same as team-ready). Long-term: exclude `.memlog.md` from path-standards."
+    },
+    {
+      "id": "enhancement-1",
+      "lens": "enhancement",
+      "severity": "medium",
+      "title": "opportunity: extend check soft-offers past undefined/status",
+      "location": "SKILL.md:Check",
+      "evidence": "Soft-offer covers undefined → define and status blockers → team-ready. Script reasons also include missing artifact path/map and depends_on undefined/not-pass without a soft_offer.",
+      "recommendation": "Map remaining reason classes to soft_offers (define for map/depends undefined; check for depends not-pass; team-ready for status)."
+    },
+    {
+      "id": "enhancement-2",
+      "lens": "enhancement",
+      "severity": "medium",
+      "title": "opportunity: headless check contract for all-stories run",
+      "location": "SKILL.md:Check",
+      "evidence": "Omitting --story returns results/all_pass; headless envelope only documents a single result object.",
+      "recommendation": "Document no-story headless shape or require --story in headless and blocked when absent."
+    }
+  ]
+}

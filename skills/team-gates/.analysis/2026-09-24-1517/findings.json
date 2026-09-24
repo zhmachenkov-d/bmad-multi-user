@@ -1,0 +1,95 @@
+{
+  "schema_version": 2,
+  "subject": "/workspaces/bmad-multi-user/skills/team-gates",
+  "generated": "2026-09-24",
+  "verdict": "Core soft-gate contract is shippable; remaining mediums are handoff polish (empty fleet, soft_offer_story, define→check).",
+  "grade": "good",
+  "summary": "Optional polish landed: reason-class soft-offer table and no-story headless envelopes. Leanness, architecture, determinism, and customization pass clean. Three medium enhancement opportunities remain around empty check/order, carrying a target story on soft_offer, and offering check after define. Path-standards still flags builder .memlog.md (leave).",
+  "standards": {
+    "canon": "/workspaces/bmad-multi-user/.agents/skills/bmad-workflow-builder/references/prompt-quality-canon.md",
+    "principles": "/workspaces/bmad-multi-user/.agents/skills/bmad-workflow-builder/references/skill-quality-principles.md",
+    "scripts": "/workspaces/bmad-multi-user/.agents/skills/bmad-workflow-builder/references/script-standards.md"
+  },
+  "themes": [
+    {
+      "title": "Handoff polish after core contract",
+      "root_cause": "Soft-offer matrix covers failing reasons well; empty fleets, missing soft_offer target id, and define→check verify loop are still implicit.",
+      "finding_ids": ["enhancement-1", "enhancement-2", "enhancement-3"],
+      "action": "Soft-offer define on empty check/order; add soft_offer_story when target known; soft-offer check after successful define."
+    },
+    {
+      "title": "Builder memlog vs path scanner",
+      "root_cause": "Process .memlog.md at skill root flagged by path-standards; not a runtime defect.",
+      "finding_ids": ["architecture-1"],
+      "action": "Leave .memlog.md; long-term exclude from scanner."
+    }
+  ],
+  "strengths": [
+    "Soft-offer table by reason class; with/without --story headless shapes documented.",
+    "Define/check/order blocked envelopes; customize.toml wired; gates.py owns plumbing.",
+    "Leanness under builder budgets (~1588 tokens)."
+  ],
+  "recommendations": [
+    {
+      "rank": 1,
+      "action": "Optional: empty check/order → soft_offer define; soft_offer_story on headless; define success → soft_offer check.",
+      "resolves": ["enhancement-1", "enhancement-2", "enhancement-3"]
+    },
+    {
+      "rank": 2,
+      "action": "Keep .memlog.md at skill root (known scanner conflict).",
+      "resolves": ["architecture-1"]
+    }
+  ],
+  "experience": {
+    "journeys": [
+      {
+        "name": "Fresh project check",
+        "steps": "check with no gates → should soft-offer define rather than vacuous all_pass."
+      },
+      {
+        "name": "Define then verify",
+        "steps": "define story gate → soft-offer check → pass/fail with reasons."
+      }
+    ],
+    "headless": "Single- and multi-story check contracts ready; soft_offer_story would complete automator handoffs."
+  },
+  "findings": [
+    {
+      "id": "architecture-1",
+      "lens": "architecture",
+      "severity": "high",
+      "title": "Prompt markdown at skill root",
+      "location": "skills/team-gates/.memlog.md",
+      "evidence": "Path-standards high: `.memlog.md` at skill root (builder process memory). Runtime audit memlog is `{planning_artifacts}/team/.memlog.md`.",
+      "recommendation": "Leave at root (same as team-ready). Long-term exclude from path-standards."
+    },
+    {
+      "id": "enhancement-1",
+      "lens": "enhancement",
+      "severity": "medium",
+      "title": "opportunity: soft-offer define on empty check/order",
+      "location": "SKILL.md:Check, SKILL.md:Order",
+      "evidence": "No-story check with zero stories yields results=[] and all_pass true with soft_offer omitted; empty order has no handoff — vacuous green / empty list.",
+      "recommendation": "When results or ordered is empty, soft_offer define; do not treat vacuous all_pass as ready."
+    },
+    {
+      "id": "enhancement-2",
+      "lens": "enhancement",
+      "severity": "medium",
+      "title": "opportunity: headless soft_offer needs target story",
+      "location": "SKILL.md:Check",
+      "evidence": "Table says define/check '(that story)' but headless only exposes soft_offer string — no story id for the handoff target.",
+      "recommendation": "Add soft_offer_story when soft_offer is define/check and a target story is known."
+    },
+    {
+      "id": "enhancement-3",
+      "lens": "enhancement",
+      "severity": "medium",
+      "title": "opportunity: soft-offer check after define success",
+      "location": "SKILL.md:Define / view",
+      "evidence": "Define reports saved gate with no soft_offer; define→check verify loop is implicit.",
+      "recommendation": "After successful define, soft_offer check (interactive + headless)."
+    }
+  ]
+}

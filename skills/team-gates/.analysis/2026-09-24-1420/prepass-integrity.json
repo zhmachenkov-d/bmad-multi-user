@@ -1,0 +1,65 @@
+{
+  "scanner": "workflow-integrity-prepass",
+  "script": "prepass-workflow-integrity.py",
+  "version": "1.0.0",
+  "skill_path": "/workspaces/bmad-multi-user/skills/team-gates",
+  "timestamp": "2026-09-24T14:21:04.481092+00:00",
+  "status": "pass",
+  "metadata": {
+    "frontmatter": {
+      "name": "team-gates",
+      "description": "Per-story soft gates and layer order. Use when the user says 'check gates', 'define story gates', 'layer order', or wants artifact/layer readiness before starting a story."
+    },
+    "sections": [
+      {
+        "level": 2,
+        "title": "Overview",
+        "line": 8
+      },
+      {
+        "level": 2,
+        "title": "Resolution rules",
+        "line": 14
+      },
+      {
+        "level": 2,
+        "title": "On Activation",
+        "line": 20
+      },
+      {
+        "level": 2,
+        "title": "Define / view",
+        "line": 29
+      },
+      {
+        "level": 2,
+        "title": "Check",
+        "line": 53
+      },
+      {
+        "level": 2,
+        "title": "Order",
+        "line": 85
+      }
+    ],
+    "workflow_type": "simple-workflow"
+  },
+  "stage_summary": {
+    "total_stages": 0,
+    "referenced": [],
+    "actual": [],
+    "missing_stages": [],
+    "orphaned_stages": []
+  },
+  "prompt_details": [],
+  "issues": [],
+  "summary": {
+    "total_issues": 0,
+    "by_severity": {
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    }
+  }
+}
