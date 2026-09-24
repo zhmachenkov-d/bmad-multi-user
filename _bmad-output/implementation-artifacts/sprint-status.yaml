@@ -1,0 +1,65 @@
+# STATUS DEFINITIONS:
+# ==================
+# Epic Status:
+#   - backlog: Epic not yet started
+#   - in-progress: Epic actively being worked on
+#   - done: All stories in epic completed
+
+# Story Status:
+#   - backlog: Story only exists in epic file
+#   - ready-for-dev: Story file created, ready for development
+#   - in-progress: Developer actively working on implementation
+#   - review: Implementation complete, ready for review
+#   - done: Story completed
+
+# Retrospective Status:
+#   - optional: Can be completed but not required
+#   - done: Retrospective has been completed
+
+# Action Item Status:
+#   - open: Committed during a retrospective, not yet addressed
+#   - in-progress: Actively being worked on
+#   - done: Completed
+
+# WORKFLOW NOTES:
+# ===============
+# - Epic transitions to 'in-progress' automatically when its first story starts (via build's sprint sync)
+# - Stories can be worked in parallel if team capacity allows
+# - Developer typically creates the next story after the previous one is 'done' to incorporate learnings
+# - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
+# - Retrospective appends its action items to action_items; the status view surfaces open ones
+generated: 09-24-2026 19:58
+last_updated: 09-24-2026 19:58
+project: bmad-multi-user
+project_key: NOKEY
+tracking_system: file-system
+story_location: 
+  /workspaces/bmad-multi-user/_bmad-output/implementation-artifacts
+development_status:
+  epic-1: backlog
+  1-1-scaffold-complementary-module-package-module-home: backlog
+  1-2-single-gate-evaluator-cli-entrypoint: backlog
+  1-3-custom-hook-templates-for-build-correct-course: backlog
+  1-4-install-path-docs-core-untouched-smoke-check: backlog
+  epic-1-retrospective: optional
+
+  epic-2: backlog
+  2-1-document-ownership-path-conventions: backlog
+  2-2-claims-registry-record-refresh-claim: backlog
+  2-3-soft-check-warn-on-conflicting-claims-edits: backlog
+  epic-2-retrospective: optional
+
+  epic-3: backlog
+  3-1-native-status-readiness-map-status-read: backlog
+  3-2-story-readiness-status-report: backlog
+  3-3-declare-layer-order: backlog
+  3-4-per-story-dependency-enrollment: backlog
+  3-5-hard-block-build-on-failed-dependency-gates: backlog
+  3-6-enforce-layer-order-in-gates: backlog
+  epic-3-retrospective: optional
+
+  epic-4: backlog
+  4-1-impact-review-on-every-correct-course-run: backlog
+  4-2-hard-block-coherent-merge-while-impact-review-open: backlog
+  4-3-status-recalculation-after-correct-course: backlog
+  epic-4-retrospective: optional
