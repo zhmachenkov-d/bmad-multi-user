@@ -23,14 +23,14 @@ It complements Core BMAD; it does not replace git. Real-time cursors, SaaS colla
 
 The Module is **BMAD-fluent multi-human coordination** on shared `_bmad-output`. It is not a generic SDD toolkit and not a second methodology engine.
 
-| Comparable | What it is | Gap vs this Module |
-| ---------- | ---------- | ------------------ |
-| **Core BMAD (process only)** | Single-writer-per-document norms; Party Mode is multi-agent | No mechanical Dependency Gates, Claim soft-checks, or Correct-Course Project Truth enforcement for multi-human parallel work |
-| **GitHub Spec Kit** | Spec→plan→tasks→implement for coding agents | Agent/SDD lifecycle; not BMAD Planning Artifact / Story / Correct-Course vocabulary |
-| **OpenSpec** | Per-change isolation folders; optional planning Stores | Reduces merge collisions via isolation; light on BMAD readiness gates and Layer Order |
-| **AWS AI-DLC Workflows** | Full gated AI lifecycle with multi-team Unit claim → pin → gate → land | Peer methodology / heavy engine; Construction fan-out after Inception — not a complementary BMAD Module. Pattern borrow (Claims, DAG readiness, serialized integration) is fine; wholesale copy is out of scope |
-| **Notion / Confluence / Linear-as-SoT** | Concurrent edit or board status | Not git-native `_bmad-output` truth; dual-write drift risk |
-| **Core-fork community patches** (e.g. Story locking via Issues) | Multi-human features by forking Core BMAD | Violates SM-4 / Non-Goals — Module must not require Core BMAD fork |
+| Comparable                                                      | What it is                                                             | Gap vs this Module                                                                                                                                                                                              |
+| --------------------------------------------------------------- | ---------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Core BMAD (process only)**                                    | Single-writer-per-document norms; Party Mode is multi-agent            | No mechanical Dependency Gates, Claim soft-checks, or Correct-Course Project Truth enforcement for multi-human parallel work                                                                                    |
+| **GitHub Spec Kit**                                             | Spec→plan→tasks→implement for coding agents                            | Agent/SDD lifecycle; not BMAD Planning Artifact / Story / Correct-Course vocabulary                                                                                                                             |
+| **OpenSpec**                                                    | Per-change isolation folders; optional planning Stores                 | Reduces merge collisions via isolation; light on BMAD readiness gates and Layer Order                                                                                                                           |
+| **AWS AI-DLC Workflows**                                        | Full gated AI lifecycle with multi-team Unit claim → pin → gate → land | Peer methodology / heavy engine; Construction fan-out after Inception — not a complementary BMAD Module. Pattern borrow (Claims, DAG readiness, serialized integration) is fine; wholesale copy is out of scope |
+| **Notion / Confluence / Linear-as-SoT**                         | Concurrent edit or board status                                        | Not git-native `_bmad-output` truth; dual-write drift risk                                                                                                                                                      |
+| **Core-fork community patches** (e.g. Story locking via Issues) | Multi-human features by forking Core BMAD                              | Violates SM-4 / Non-Goals — Module must not require Core BMAD fork                                                                                                                                              |
 
 **Intentional brief overrides retained in this PRD:** native BMAD Artifact Lifecycle Status instead of inventing `draft|review|ready`; Claim soft-check (not hard locks) in v1; Hard Block on Build start.
 
@@ -171,7 +171,7 @@ A team member can declare an ordered list of Layers for the project. Realizes UJ
 
 Dependency Gates fail (Hard Block) when a Story’s Layer would start before all Stories of earlier Layers meet the default ready condition. Realizes UJ-1.
 
-**Default rule (v1):** For a Story tagged with Layer *L*, every Story in `sprint-status` tagged with a Layer strictly earlier than *L* in the declared Layer Order MUST have status `done`. Until then, starting Build for the Story is a Hard Block.
+**Default rule (v1):** For a Story tagged with Layer _L_, every Story in `sprint-status` tagged with a Layer strictly earlier than _L_ in the declared Layer Order MUST have status `done`. Until then, starting Build for the Story is a Hard Block.
 
 **Consequences (testable):**
 
