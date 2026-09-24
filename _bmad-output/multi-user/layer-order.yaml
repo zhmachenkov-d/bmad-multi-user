@@ -1,0 +1,3 @@
+# Ordered Layer names plus named loosen-exceptions (AD-7 / FR7–FR8).
+# No story→layer map here; layer membership lives under deps/.
+{}
