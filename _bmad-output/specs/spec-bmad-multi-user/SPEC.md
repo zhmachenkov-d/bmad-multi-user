@@ -2,6 +2,7 @@
 id: SPEC-bmad-multi-user
 companions:
   - ../../planning-artifacts/architecture/architecture-bmad-multi-user-2026-09-24/ARCHITECTURE-SPINE.md
+  - pilot-ops.md
 sources:
   - ../../planning-artifacts/prds/prd-bmad-multi-user-2026-09-24/prd.md
   - ../../planning-artifacts/briefs/brief-bmad-multi-user-2026-09-24/brief.md
@@ -35,7 +36,7 @@ sources:
 
 - **CAP-5** Correct-Course coherence
   - **intent:** After mid-flight plan change via Correct-Course, the team must complete impact review and status recalculation so Project Truth (docs, status, code) does not split before coherent merge / Build-ready.
-  - **success:** Every `bmad-correct-course` run requires impact review + recalc; authoritative signal is Module `impact-review.yaml` (`open`|`cleared`); coherent-merge/Build-ready Hard-Blocks while required review is `open`; invalidated Stories move to a non-executable **native** BMAD status (no invented `blocked` enum); git commit/push stay unrestricted.
+  - **success:** Every `bmad-correct-course` run requires impact review + recalc; authoritative signal is Module `impact-review.yaml` (`open`|`cleared`); coherent-merge/Build-ready Hard-Blocks while required review is `open`; invalidated Stories move to non-executable native status defaulting to `backlog` (overridable in Module home; never invent `blocked`); git commit/push stay unrestricted.
 
 - **CAP-6** Installable complementary Module
   - **intent:** Team can install the Module into a project that already has Core BMAD and use CAP-1–CAP-5 without editing installer-owned Core paths; Core workflows remain invokable with Module gates composed around them.
@@ -47,6 +48,7 @@ sources:
 - Preflight-gate over shared truth only: evaluate and Hard-Block; must not become a second methodology runtime or derived readiness index SoT away from Core `_bmad-output` artifacts.
 - All Module-owned state in one tree under `_bmad-output/` (seed `multi-user/`); plain text (YAML preferred, JSON allowed; Markdown prose appendix for impact review only); one shared gate evaluator CLI for status report, Build hooks, and coherent-merge checks.
 - Write ownership: Module home = Module skills/scripts only; Planning Artifacts = humans + Core (Module reads statuses); Story status writes only on Correct-Course/recalc using native BMAD values.
+- Correct-Course recalc default for invalidated Stories is native status `backlog`; project may override in Module home config to another native non-executable status only.
 - Story ids in deps filenames, Claims Story slices, impact-review items, and Layer exceptions MUST equal `sprint-status` keys; Layer membership declared only in per-Story deps files.
 - Readiness map maps artifact kinds → acceptable **native** BMAD statuses for Planning Artifact readiness only — must not redefine Story Layer `done`.
 - Offline for CAP-1–CAP-5; no mandatory SaaS/network; no secrets beyond Core/git; gate preflight must stay a normal fast local check (no numeric SLA in v1).
@@ -68,15 +70,10 @@ sources:
 
 ## Success signal
 
-Pilot Team sustained merge/drift cleanup toward **15–25%** of working time (from ~50–60% estimate); fewer large shared-artifact merges and rewrites from early Story starts or post–Correct-Course inconsistency; after parallel work and course correction, docs/status/code align more often than they diverge — **without** requiring a Core BMAD patch or fork. Standard BMAD workflow time must not become significantly slower due to Module gates (SM-C1).
+Pilot Team sustained merge/drift cleanup toward **15–25%** of working time (from ~50–60% estimate); fewer large shared-artifact merges and rewrites from early Story starts or post–Correct-Course inconsistency; after parallel work and course correction, docs/status/code align more often than they diverge — **without** requiring a Core BMAD patch or fork. Standard BMAD workflow time must not become significantly slower due to Module gates (SM-C1). Measure via the weekly Pilot diary in `pilot-ops.md`.
 
 ## Assumptions
 
 - SM-1 ~50–60% baseline is Pilot Team estimate pending measurement.
 - Developers are the primary sufferers; PM/UX participate.
 - PRD open questions on Correct-Course trigger and coherent-merge signal are resolved by architecture: every `bmad-correct-course` run + authoritative `impact-review.yaml`.
-
-## Open Questions
-
-- Pilot diary protocol for SM-2/SM-3 (and optional SM-C1 preflight proxy) — define before pilot measurement starts.
-- Which native non-executable Story status Correct-Course recalc prefers when several are valid — project config (must stay native).

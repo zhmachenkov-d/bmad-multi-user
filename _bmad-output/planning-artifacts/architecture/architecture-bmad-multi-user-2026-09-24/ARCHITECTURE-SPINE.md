@@ -5,7 +5,7 @@ purpose: build-substrate
 altitude: initiative
 paradigm: "preflight-gate over shared truth"
 scope: "Installable complementary BMAD Module for multi-human coordination on shared _bmad-output (F1–F6 / FR-1–FR-12)"
-status: draft
+status: final
 created: "2026-09-24"
 updated: "2026-09-24"
 binds:
@@ -92,7 +92,7 @@ flowchart LR
 
 - **Binds:** F2, FR-10, NFR-1
 - **Prevents:** Parallel lifecycle enums; unauthorized Core / vendor mutation
-- **Rule:** Module home = Module skills/scripts write only. Planning Artifacts = humans + Core write; Module reads statuses only. `sprint-status` / Story status = humans + Core; Module may write Story status only via explicit Correct-Course / recalc using **native** BMAD status values. After recalc invalidates executable work, move affected Stories to a **non-executable native** status (project picks among Core vocab, typically `backlog` — never invent `blocked` as a Module enum). Installer-owned Core paths = never
+- **Rule:** Module home = Module skills/scripts write only. Planning Artifacts = humans + Core write; Module reads statuses only. `sprint-status` / Story status = humans + Core; Module may write Story status only via explicit Correct-Course / recalc using **native** BMAD status values. After recalc invalidates executable work, move affected Stories to a **non-executable native** status — **default `backlog`**, overridable in Module home config to another native non-executable status only (never invent `blocked` as a Module enum). Installer-owned Core paths = never
 
 ### AD-5 — Single gate evaluator [ADOPTED]
 
@@ -216,7 +216,7 @@ _bmad/custom/                     # team hooks wiring Module preflight into Core
 - Correct-Course touch-heuristic skip — v1 always runs impact review
 - Exact YAML/JSON field schemas for claims/deps/impact-review — implementation seed; breaking changes → semver major
 - Exact default readiness-map **values** per artifact kind — shipped as Module defaults at build (kinds covered per AD-10); overridable in Module home
-- Which native non-executable Story status Correct-Course recalc prefers when several are valid — project config; must stay native (AD-4)
-- Pilot diary protocol for SM-2/SM-3 and optional SM-C1 preflight proxy — pilot ops, not gate invariants
 - Module home folder rename from `multi-user/` — allowed if single-home-under-`_bmad-output` holds
 - Additional Build-like skills beyond `bmad-build` / `bmad-build-auto` discovered later — must gain the same custom-hook wiring (AD-2) before Module claims coverage
+
+**Resolved (no longer deferred):** Correct-Course recalc default non-executable status = `backlog` (AD-4); Pilot diary for SM-2/SM-3/SM-C1 = Spec companion `pilot-ops.md`.

@@ -305,12 +305,14 @@ Deferred items already listed in Non-Goals (§6), plus:
 
 ## 9. Open Questions
 
-Not phase-blocking for Architecture kickoff; resolve during Architecture / pilot design. Layer Order default (FR-8) is locked to: all earlier-Layer Stories must be `done`.
+All former open questions resolved (Architecture + Spec). Layer Order default (FR-8) remains: all earlier-Layer Stories must be `done`.
 
-1. **Correct-Course trigger (FR-9):** What exactly starts mandatory impact review — every `bmad-correct-course` run, or only when the change touches ≥1 in-progress Story / Dependency Gate graph?
-2. **Coherent-merge signal (FR-9):** What concrete Module artifact or flag means “impact review complete” so Build-ready / coherent-merge checks can pass?
-3. **Pilot measurement for SM-2 / SM-3:** Minimal diary protocol for the Pilot Team (e.g. weekly count of conflicted `_bmad-output` merges; weekly Y/N “docs/status/code agree after Correct-Course”) — define before pilot measurement starts.
-4. **Optional SM-C1 proxy:** Watch-only metric for gate preflight cost (e.g. wall-clock or “extra preflight steps ≤ N”) — Architecture may propose; not a v1 SLA.
+1. **Correct-Course trigger (FR-9):** _(resolved)_ Every `bmad-correct-course` run requires impact review + status recalculation (architecture AD-9).
+2. **Coherent-merge signal (FR-9):** _(resolved)_ Authoritative signal is Module-home `impact-review.yaml` with `status: open|cleared` (AD-9).
+3. **Pilot measurement for SM-2 / SM-3:** _(resolved)_ Weekly Pilot diary protocol in `_bmad-output/specs/spec-bmad-multi-user/pilot-ops.md`.
+4. **Optional SM-C1 proxy:** _(resolved)_ Watch-only Y/N “felt like normal fast preflight” + optional wall-clock seconds; not a v1 SLA (`pilot-ops.md`).
+
+**Also resolved (Spec):** Correct-Course recalc default for invalidated Stories is native status `backlog` (overridable in Module home to another native non-executable status only).
 
 ## 10. Assumptions Index
 
@@ -318,3 +320,4 @@ Not phase-blocking for Architecture kickoff; resolve during Architecture / pilot
 - NFR-3 uses qualitative fast-preflight language (no numeric SLA), confirmed.
 - SM-1 ~50–60% baseline is Pilot Team estimate pending measurement.
 - Developers are the primary sufferers (from brief); restored in §2.
+- _(cleared)_ §9 OQ1–OQ4 resolved via Architecture AD-9 and Spec `pilot-ops.md` / recalc default `backlog`.
