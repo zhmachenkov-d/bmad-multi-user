@@ -1,0 +1,169 @@
+{
+  "schema_version": 2,
+  "subject": "/workspaces/bmad-multi-user/skills/team-status",
+  "generated": "2026-09-24T15:30:00Z",
+  "verdict": "Critical soft_offer reason-string bug mis-targets depends_on-undefined; otherwise lean simple-workflow board with medium ceremony in Ready.",
+  "grade": "poor",
+  "summary": "team-status correctly pushes ready/explain plumbing into status.py and wires customize.toml like its siblings. The ship blocker is soft_offer_for_check classifying English gate reasons—depends_on 'X' has no gate definition routes soft_offer_story to the checked story instead of X. Secondary: Ready restates script filters, read-only vs mkdir tension, and under-surfaced soft_offers on all-blocked.",
+  "standards": {
+    "canon": "/workspaces/bmad-multi-user/.agents/skills/bmad-workflow-builder/references/prompt-quality-canon.md",
+    "principles": "/workspaces/bmad-multi-user/.agents/skills/bmad-workflow-builder/references/skill-quality-principles.md",
+    "scripts": "/workspaces/bmad-multi-user/.agents/skills/bmad-workflow-builder/references/script-standards.md"
+  },
+  "themes": [
+    {
+      "title": "Soft-offer intelligence leak",
+      "root_cause": "status.py maps handoffs by English substrings from gates.py reasons; order shadows depends_on-undefined onto the wrong story.",
+      "finding_ids": ["determinism-1"],
+      "action": "Emit stable reason codes from team-gates (or shared mapper) and map codes→soft_offer; add a unit test for depends_on undefined."
+    },
+    {
+      "title": "Ready ceremony vs script truth",
+      "root_cause": "SKILL.md re-teaches filters and presentation the script already owns, while under-using script soft_offers on all-blocked.",
+      "finding_ids": [
+        "leanness-1",
+        "leanness-2",
+        "leanness-3",
+        "enhancement-1"
+      ],
+      "action": "Trust script cohorts/soft_offers; trim Ready bullets and interactive script; always surface soft_offer when present."
+    },
+    {
+      "title": "Principle / entry polish",
+      "root_cause": "Read-only bar conflicts with mkdir; unfinished invite fires before sprint exists; builder memlog sits at skill root.",
+      "finding_ids": [
+        "architecture-1",
+        "architecture-2",
+        "enhancement-2",
+        "enhancement-3"
+      ],
+      "action": "Narrow read-only to no gate/sprint mutations; invite unfinished only when sprint exists; leave/gitignore builder .memlog.md like siblings."
+    }
+  ],
+  "strengths": [
+    "Deterministic ready/explain via status.py + sibling gates import",
+    "Headless JSON contracts for ready and explain",
+    "customize.toml sole mechanism, correctly wired",
+    "Empty fleet ≠ ready; unfinished is runtime flag not setup config",
+    "Tokens 1182 well under budget"
+  ],
+  "recommendations": [
+    {
+      "rank": 1,
+      "action": "Fix soft_offer_for_check: reason codes or ordered depends_on checks before generic 'no gate definition'; unit-test depends_on undefined → soft_offer_story=dep",
+      "resolves": ["determinism-1"]
+    },
+    {
+      "rank": 2,
+      "action": "Trim Ready interpret/interactive ceremony; always present script soft_offer including all-blocked",
+      "resolves": ["leanness-1", "leanness-2", "leanness-3", "enhancement-1"]
+    },
+    {
+      "rank": 3,
+      "action": "Clarify read-only vs mkdir; condition unfinished invite on sprint-status; optional soft-gate after board",
+      "resolves": ["architecture-2", "enhancement-2", "enhancement-3"]
+    }
+  ],
+  "experience": {
+    "journeys": [
+      {
+        "name": "Headless ready",
+        "steps": "explicit ready → status.py ready → JSON with ready/blocked/soft_offer"
+      },
+      {
+        "name": "Headless explain",
+        "steps": "story id → status.py explain → reasons + soft_offer (bug on depends_on undefined)"
+      },
+      {
+        "name": "Interactive all-blocked",
+        "steps": "board shows blocked; soft_offer under-surfaced today"
+      }
+    ],
+    "headless": "Ready when paths explicit; soft_offer bug can mis-route automators on depends_on-undefined."
+  },
+  "findings": [
+    {
+      "id": "determinism-1",
+      "lens": "determinism",
+      "severity": "critical",
+      "title": "soft_offer classifies English reason substrings",
+      "location": "scripts/status.py:soft_offer_for_check",
+      "evidence": "Substring rules infer handoff from gates.py phrasing. Order makes depends_on '{dep}' has no gate definition match 'no gate definition' first and set soft_offer_story to the checked story; the depends_on-define branch is unreachable for that shape.",
+      "recommendation": "Emit stable reason codes from team-gates (or shared mapping) and map codes→soft_offer; unit-test depends_on undefined."
+    },
+    {
+      "id": "architecture-1",
+      "lens": "architecture",
+      "severity": "high",
+      "title": "Builder memlog at skill root",
+      "location": "skills/team-status/.memlog.md",
+      "evidence": "Path-standards flags .memlog.md at skill root. Same as team-ready/team-gates builder process memory pattern.",
+      "recommendation": "Keep builder memlog out of shipped tree (gitignore) or accept sibling convention; runtime memlog stays at planning_artifacts/team/."
+    },
+    {
+      "id": "leanness-1",
+      "lens": "leanness",
+      "severity": "medium",
+      "title": "Ready bullets re-teach script filters",
+      "location": "SKILL.md:Ready (interpret list)",
+      "evidence": "Bullets redefine ready/blocked/unfinished semantics status.py already applied after 'trust script JSON'.",
+      "recommendation": "Keep empty_fleet why, do-not-flatten blocked, sprint_warning; drop semantic redefinitions."
+    },
+    {
+      "id": "leanness-2",
+      "lens": "leanness",
+      "severity": "medium",
+      "title": "Interactive Ready is presentation script",
+      "location": "SKILL.md:Ready (Interactive paragraph)",
+      "evidence": "Prescribes cohort order and soft-offer already in script JSON.",
+      "recommendation": "One goal: present script cohorts/soft_offers without inventing greens; offer explain on blocked.",
+      "proposed_smallest": "Interactive: present the script's ready/blocked/(optional unfinished) and its soft_offers without inventing greens; offer explain for blocked. Run {workflow.on_complete} if non-empty.",
+      "predicted_delta": "Loss of forced ordering and one-line-reason formatting only. Route to variant eval to confirm."
+    },
+    {
+      "id": "architecture-2",
+      "lens": "architecture",
+      "severity": "medium",
+      "title": "Read-only bar vs mkdir on activation",
+      "location": "SKILL.md:Overview vs On Activation step 3",
+      "evidence": "Overview says read-only; activation mkdir team/ if needed.",
+      "recommendation": "Narrow bar to no gate/sprint mutations, or drop mkdir and treat missing team as empty fleet."
+    },
+    {
+      "id": "enhancement-1",
+      "lens": "enhancement",
+      "severity": "medium",
+      "title": "Add: surface script soft_offer on all-blocked Ready",
+      "location": "SKILL.md:Ready interactive",
+      "evidence": "Interactive Ready under-uses script soft_offer when ready=[] and blocked nonempty.",
+      "recommendation": "Always surface soft_offer fields from script JSON when present."
+    },
+    {
+      "id": "enhancement-2",
+      "lens": "enhancement",
+      "severity": "medium",
+      "title": "Opportunity: condition unfinished invite on sprint-status",
+      "location": "SKILL.md:On Activation step 4–5",
+      "evidence": "Open-floor may ask unfinished before sprint resolves; empty unfinished underwhelms.",
+      "recommendation": "Invite unfinished only after sprint-status exists."
+    },
+    {
+      "id": "leanness-3",
+      "lens": "leanness",
+      "severity": "low",
+      "title": "Explain restates script soft_offer table",
+      "location": "SKILL.md:Explain (ready true/false bullets)",
+      "evidence": "Enumerates soft_offer targets already in script JSON.",
+      "recommendation": "Keep list reasons + apply script soft_offer; drop enumeration."
+    },
+    {
+      "id": "enhancement-3",
+      "lens": "enhancement",
+      "severity": "low",
+      "title": "Opportunity: add soft-gate after Ready board",
+      "location": "SKILL.md:Ready interactive close",
+      "evidence": "No soft pivot to unfinished/explain after explicit team-status.",
+      "recommendation": "One soft-gate after board, then stop."
+    }
+  ]
+}

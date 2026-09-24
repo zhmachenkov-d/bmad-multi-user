@@ -1,0 +1,56 @@
+{
+  "cases": [
+    {
+      "id": "ready-1",
+      "input": "Run headless. Team status — ready list, include unfinished. Paths: planning_artifacts=evals/files/planning, team=evals/files/team, sprint-status=evals/files/sprint-status.yaml. Always invoke from the staged skill: uv run .cursor/skills/team-status/scripts/status.py ready --team-dir evals/files/team --planning-artifacts evals/files/planning --sprint-status evals/files/sprint-status.yaml --include-unfinished --gates-py evals/files/gates.py. Emit the headless JSON envelope only; do not invent greens.",
+      "rubric": [
+        "final message contains a JSON object with status=complete and intent=ready",
+        "ready array contains story 1.1 and does not contain story 1.2",
+        "unfinished array contains 1-1-backend-api",
+        "soft_offer is bmad-build and soft_offer_story is 1.1",
+        "transcript shows a call that runs status.py ready (not hand-parsed gates.json)"
+      ],
+      "state_prefix": null,
+      "files": [
+        "evals/files/planning/prd.md",
+        "evals/files/planning/arch.md",
+        "evals/files/team/gates.json",
+        "evals/files/sprint-status.yaml",
+        "evals/files/gates.py"
+      ]
+    },
+    {
+      "id": "explain-1",
+      "input": "Run headless. Explain why story 1.2 is blocked. Paths: planning_artifacts=evals/files/planning, team=evals/files/team. Invoke: uv run .cursor/skills/team-status/scripts/status.py explain --team-dir evals/files/team --planning-artifacts evals/files/planning --story 1.2 --gates-py evals/files/gates.py. Emit headless JSON only.",
+      "rubric": [
+        "final message contains JSON with status=complete, intent=explain, ready=false",
+        "result.reasons mentions architecture status needing ready (or equivalent draft status)",
+        "soft_offer is team-ready",
+        "transcript shows status.py explain for story 1.2"
+      ],
+      "state_prefix": null,
+      "files": [
+        "evals/files/planning/prd.md",
+        "evals/files/planning/arch.md",
+        "evals/files/team/gates.json",
+        "evals/files/gates.py"
+      ]
+    },
+    {
+      "id": "empty-fleet-1",
+      "input": "Run headless. Team status ready list. Paths: planning_artifacts=evals/files/planning, team=evals/files/empty-team (gates.json has no stories). Invoke: uv run .cursor/skills/team-status/scripts/status.py ready --team-dir evals/files/empty-team --planning-artifacts evals/files/planning --gates-py evals/files/gates.py. Emit headless JSON only.",
+      "rubric": [
+        "final message JSON has status=complete, intent=ready, empty_fleet=true",
+        "ready array is empty",
+        "soft_offer is team-gates",
+        "does not claim any story is ready to build"
+      ],
+      "state_prefix": null,
+      "files": [
+        "evals/files/planning/prd.md",
+        "evals/files/gates.py",
+        "evals/files/empty-team/gates.json"
+      ]
+    }
+  ]
+}

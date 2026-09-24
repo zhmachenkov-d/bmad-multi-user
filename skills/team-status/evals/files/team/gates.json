@@ -1,0 +1,26 @@
+{
+  "artifacts": {
+    "prd": "prd.md",
+    "architecture": "arch.md"
+  },
+  "layers": [],
+  "stories": {
+    "1.1": {
+      "requires": [
+        "prd"
+      ],
+      "layer": "backend",
+      "depends_on": []
+    },
+    "1.2": {
+      "requires": [
+        "prd",
+        "architecture"
+      ],
+      "layer": "frontend",
+      "depends_on": [
+        "1.1"
+      ]
+    }
+  }
+}

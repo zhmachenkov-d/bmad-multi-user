@@ -1,0 +1,24 @@
+{
+  "name": "cursor",
+  "invocation": [
+    "python3",
+    "/workspaces/bmad-multi-user/skills/adapters/cursor_stream_bridge.py",
+    "--cwd",
+    "{cwd}",
+    "--",
+    "agent",
+    "-p",
+    "--force",
+    "--trust",
+    "--workspace",
+    "{cwd}",
+    "--output-format",
+    "stream-json",
+    "{prompt}"
+  ],
+  "auth_env": "CURSOR_API_KEY",
+  "transcript": { "format": "stdout-jsonl" },
+  "skill_dir": ".cursor/skills",
+  "load_signal": { "skill_tool": "Skill", "read_tool": "Read" },
+  "env_passthrough": []
+}

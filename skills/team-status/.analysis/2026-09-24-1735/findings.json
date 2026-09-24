@@ -1,0 +1,84 @@
+{
+  "schema_version": 2,
+  "subject": "/workspaces/bmad-multi-user/skills/team-status",
+  "generated": "2026-09-24T17:35:00Z",
+  "verdict": "Prior critical soft_offer bug and Ready ceremony are cleared; remaining high is builder .memlog.md at skill root (sibling convention).",
+  "grade": "good",
+  "summary": "team-status is shippable as a lean readiness board: status.py owns cohorts and soft-offers (depends_on targeting fixed and tested), SKILL.md trusts script JSON, and customize.toml matches siblings. Path-standards still flags builder .memlog.md; one medium soft-gate polish remains around not re-offering unfinished.",
+  "standards": {
+    "canon": "/workspaces/bmad-multi-user/.agents/skills/bmad-workflow-builder/references/prompt-quality-canon.md",
+    "principles": "/workspaces/bmad-multi-user/.agents/skills/bmad-workflow-builder/references/skill-quality-principles.md",
+    "scripts": "/workspaces/bmad-multi-user/.agents/skills/bmad-workflow-builder/references/script-standards.md"
+  },
+  "themes": [
+    {
+      "title": "Builder memlog vs path-standards",
+      "root_cause": "Builder process memory lives at skill root as .memlog.md; scanner allows only SKILL.md there — same accepted pattern as team-ready/team-gates.",
+      "finding_ids": ["architecture-1"],
+      "action": "Leave .memlog.md in place for resume; clear the fail only if ship lint requires excluding it from the root-*.md check or packaged contents."
+    },
+    {
+      "title": "Soft-gate path awareness",
+      "root_cause": "Post-board soft-gate can re-offer unfinished after open-floor already settled it, or pitch unfinished/explain on empty_fleet.",
+      "finding_ids": ["enhancement-1"],
+      "action": "Offer unfinished only when sprint exists and not already decided; explain only when blocked; skip soft-gate on empty_fleet."
+    }
+  ],
+  "strengths": [
+    "Deterministic ready/explain via status.py + sibling gates import",
+    "soft_offer_for_check depends_on-first matching with unit and integration coverage",
+    "Headless JSON contracts; empty fleet ≠ ready",
+    "SKILL trusts script cohorts/soft_offers; unfinished is runtime flag",
+    "customize.toml sole mechanism, universal defaults only",
+    "Tokens 1185 under budget; scripts/integrity clean"
+  ],
+  "recommendations": [
+    {
+      "rank": 1,
+      "action": "Optional: path-aware soft-gate (skip re-offer unfinished; skip on empty_fleet)",
+      "resolves": ["enhancement-1"]
+    },
+    {
+      "rank": 2,
+      "action": "Accept or exclude builder .memlog.md from path-standards like siblings",
+      "resolves": ["architecture-1"]
+    }
+  ],
+  "experience": {
+    "journeys": [
+      {
+        "name": "Headless ready",
+        "steps": "explicit ready → status.py ready → JSON with ready/blocked/soft_offer"
+      },
+      {
+        "name": "Headless explain depends_on undefined",
+        "steps": "story id → status.py explain → soft_offer_story = dependency"
+      },
+      {
+        "name": "Interactive all-blocked",
+        "steps": "board shows blocked + script soft_offer; soft-gate may still re-ask unfinished"
+      }
+    ],
+    "headless": "Ready when paths explicit; soft_offer targets deps correctly after the fix."
+  },
+  "findings": [
+    {
+      "id": "architecture-1",
+      "lens": "architecture",
+      "severity": "high",
+      "title": "Prompt file at skill root: .memlog.md",
+      "location": ".memlog.md",
+      "evidence": "path-standards reports high: .memlog.md sits at skill root (only SKILL.md allowed). Pre-pass: 1 structure finding. Same builder process-memory convention as team-ready/team-gates; not workflow content, but the scanner still fails the skill.",
+      "recommendation": "Keep as builder memlog beside SKILL.md (do not move to references/). Clear the path-standards fail by excluding .memlog.md from the root-*.md check or from packaged skill contents if ship lint must be green."
+    },
+    {
+      "id": "enhancement-1",
+      "lens": "enhancement",
+      "severity": "medium",
+      "title": "Opportunity: path-aware soft-gate (don't re-offer unfinished)",
+      "location": "SKILL.md:Ready interactive",
+      "evidence": "Soft-gate elicitation after the board always offers unfinished when sprint exists, but Open-floor opening already invites unfinished on the underspecified path when sprint exists; empty_fleet still gets unfinished/explain while soft_offer is team-gates define.",
+      "recommendation": "One soft-gate: offer unfinished only if sprint exists and unfinished was not already decided (open-floor or --include-unfinished); offer explain only when blocked; else proceed via script soft_offer. Skip soft-gate on empty_fleet."
+    }
+  ]
+}

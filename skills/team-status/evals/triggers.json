@@ -1,0 +1,30 @@
+[
+  { "query": "team status — what's ready to build?", "should_trigger": true },
+  {
+    "query": "why is this story blocked before I start?",
+    "should_trigger": true
+  },
+  {
+    "query": "show unfinished stories and ready list for the sprint",
+    "should_trigger": true
+  },
+  { "query": "what's ready for bmad-build right now?", "should_trigger": true },
+  { "query": "check gates for story 1.2", "should_trigger": false },
+  { "query": "mark the PRD ready", "should_trigger": false },
+  {
+    "query": "define layer order for backend and frontend",
+    "should_trigger": false
+  },
+  {
+    "query": "run sprint planning and generate sprint-status",
+    "should_trigger": false
+  },
+  {
+    "query": "claim the architecture doc so nobody else edits it",
+    "should_trigger": false
+  },
+  {
+    "query": "write a product brief for the multi-user module",
+    "should_trigger": false
+  }
+]
