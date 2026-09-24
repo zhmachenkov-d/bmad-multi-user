@@ -89,11 +89,26 @@ Placeholder YAML rule: each Module-home file is valid YAML (`{}` or `null`) plus
 - Given the scaffold is applied, when inspecting `_bmad-output/multi-user/`, then `config.yaml`, `layer-order.yaml`, `claims.yaml`, `impact-review.yaml`, and a `deps/` directory exist as plain-text YAML-oriented Module-home placeholders suitable for PR review.
 - Given the scaffold is complete, when reviewing the diff, then no installer-owned Core BMAD vendor file was modified as a prerequisite for the scaffold to be present, and existing `skills/team-*` / `planning-artifacts/team/` remain untouched.
 
+### Review Findings
+
+- [x] [Review][Defer] Pin PACKAGE_ROOT in epic-1-context [`_bmad-output/implementation-artifacts/epic-1-context.md:36`] — deferred: pre-existing continuity gap; epic was compiled before PACKAGE_ROOT froze; already tracked in deferred-work for Stories 1.2–1.4
+
+**Rejected**
+
+- false — Spec frontmatter `done` vs sprint `review`: sprint correctly awaits this review; changing frontmatter would edit the spec under review.
+- false — `{}` vs `null` placeholders: Design Notes allow both; comments document intended shapes.
+- false — README says “Installable”: product/shape term; Deferred section already points install/smoke to Story 1.4.
+- false — Empty Spec Change Log: template stays empty until a bad_spec loopback.
+- false — Fail-closed when Core absent: no executable scaffold in this story; AC preconditions Core installed.
+- low (rejected) — Code Map still labels paths **missing** / ellipsis spine path / thin Verification Commands: fix would edit this build’s spec; presence + Core-untouched commands match AC.
+- low (rejected) — `deps/` lacks enrollment README / Module home lacks README: not in 1.1 AC; enrollment and Hard Block arrive later; package README + Design Notes cover SoT.
+
 ## Implementation Notes
 
 - Created `_bmad-output/multi-user/` placeholders (`{}` / `null` + short comments) and `packages/bmad-multi-user/` with README + `skills/.gitkeep` + `scripts/.gitkeep`.
 - Left `skills/team-*`, `planning-artifacts/team/`, and installer-owned Core paths untouched.
 - Verification: presence checks exit 0; Core `git status` empty; YAML parse OK; create-if-missing re-check left hashes unchanged (idempotent).
+
 ## Spec Change Log
 
 ## Review Triage Log
@@ -114,6 +129,7 @@ Placeholder YAML rule: each Module-home file is valid YAML (`{}` or `null`) plus
 - medium (patch) — Blind: sprint-status still `in-progress` while implementation is complete and spec is `in-review` — Updated story key to `review`.
 - (edge-case-hunter) — No findings.
 - (verification-gap) — No verification gaps; other Code Map finding rejected as above.
+
 ## Design Notes
 
 Module home name `multi-user/` is the architecture seed (rename later OK if single-home invariant holds). Do not continue `planning-artifacts/team/` as Module SoT.
