@@ -1,0 +1,63 @@
+{
+  "schema_version": 2,
+  "subject": "/workspaces/bmad-multi-user/skills/team-claim",
+  "generated": "2026-09-24T18:22:00Z",
+  "verdict": "Prior fair findings cleared; remaining high is builder .memlog.md at skill root (sibling convention).",
+  "grade": "good",
+  "summary": "team-claim is shippable as a lean soft-ownership board: claims.py owns CRUD, SKILL.md has a compact headless envelope with on_complete on every terminal, and soft-offer/restatement ceremony is gone. Path-standards still flags builder .memlog.md — same accepted pattern as team-ready/gates/status.",
+  "standards": {
+    "canon": "/workspaces/bmad-multi-user/.agents/skills/bmad-workflow-builder/references/prompt-quality-canon.md",
+    "principles": "/workspaces/bmad-multi-user/.agents/skills/bmad-workflow-builder/references/skill-quality-principles.md",
+    "scripts": "/workspaces/bmad-multi-user/.agents/skills/bmad-workflow-builder/references/script-standards.md"
+  },
+  "themes": [
+    {
+      "title": "Builder memlog vs path-standards",
+      "root_cause": "Builder process memory lives at skill root as .memlog.md; scanner allows only SKILL.md there — same accepted pattern as siblings.",
+      "finding_ids": ["architecture-1"],
+      "action": "Leave .memlog.md in place for resume; clear the fail only if ship lint requires excluding it from the root-*.md check or packaged contents."
+    }
+  ],
+  "strengths": [
+    "Compact Headless envelope + on_complete on every Claim/Release/Check/list terminal",
+    "Deterministic claims.py with conflict/--force/takeover",
+    "No headless JSON ceremony; no vague soft-offer check",
+    "customize.toml sole mechanism; prior on_complete gap cleared",
+    "Tokens 981 under budget; integrity + scripts + leanness/determinism/enhancement clean"
+  ],
+  "recommendations": [
+    {
+      "rank": 1,
+      "action": "Accept or exclude builder .memlog.md from path-standards like siblings",
+      "resolves": ["architecture-1"]
+    }
+  ],
+  "experience": {
+    "journeys": [
+      {
+        "name": "Headless claim free",
+        "steps": "target+actor → claims.py claim → complete envelope + on_complete"
+      },
+      {
+        "name": "Headless claim conflict",
+        "steps": "other holder → blocked; --force → takeover + on_complete"
+      },
+      {
+        "name": "List + release",
+        "steps": "list claims/count; release clears stale without actor match"
+      }
+    ],
+    "headless": "All intents share one key contract; on_complete fires on complete and blocked terminals."
+  },
+  "findings": [
+    {
+      "id": "architecture-1",
+      "lens": "architecture",
+      "severity": "high",
+      "title": "Prompt file at skill root: .memlog.md",
+      "location": ".memlog.md",
+      "evidence": "path-standards still fails high: .memlog.md at skill root (only SKILL.md allowed). Same builder process-memory convention as team-ready/team-gates/team-status; not workflow content, but scanner still flags it.",
+      "recommendation": "Keep as builder memlog beside SKILL.md (do not move to references/). Clear path-standards fail by excluding .memlog.md from root-*.md check or packaged contents if ship lint must be green."
+    }
+  ]
+}

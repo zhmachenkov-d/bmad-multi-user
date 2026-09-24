@@ -1,0 +1,113 @@
+{
+  "scanner": "prompt-metrics-prepass",
+  "script": "prepass-prompt-metrics.py",
+  "version": "2.0.0",
+  "skill_path": "/workspaces/bmad-multi-user/skills/team-claim",
+  "timestamp": "2026-09-24T17:47:04.586451+00:00",
+  "budgets": {
+    "skill_md_tokens": [
+      1500,
+      2500
+    ],
+    "multi_branch_reference_tokens": 4500,
+    "single_purpose_reference_tokens": 9000
+  },
+  "skill_md": {
+    "tokens": 1143,
+    "token_method": "tiktoken",
+    "section_count": 6,
+    "frontmatter": {
+      "name": "team-claim",
+      "description": "\"Soft-claim planning artifacts. Use when the user says 'claim this', 'release claim', 'who owns the PRD', or wants soft ownership so teammates do not collide on hot docs.\"",
+      "description_chars": 171,
+      "description_has_angle_brackets": false,
+      "keys": [
+        "description",
+        "name"
+      ]
+    }
+  },
+  "aggregate": {
+    "total_files_scanned": 2,
+    "total_tokens": 1357,
+    "total_waste_patterns": 0,
+    "total_back_references": 0,
+    "files_with_numbered_prefix": 0
+  },
+  "reference_sizes": {},
+  "files": [
+    {
+      "file": "SKILL.md",
+      "tokens": 1143,
+      "token_method": "tiktoken",
+      "sections": [
+        {
+          "level": 2,
+          "title": "Overview"
+        },
+        {
+          "level": 2,
+          "title": "Resolution rules"
+        },
+        {
+          "level": 2,
+          "title": "On Activation"
+        },
+        {
+          "level": 2,
+          "title": "Claim"
+        },
+        {
+          "level": 2,
+          "title": "Release"
+        },
+        {
+          "level": 2,
+          "title": "Check / list (conflict warn)"
+        }
+      ],
+      "table_count": 0,
+      "table_rows": 0,
+      "fenced_block_count": 4,
+      "allcaps_directive_count": 0,
+      "numbered_prefix_filename": false,
+      "waste_patterns": [],
+      "back_references": [],
+      "frontmatter": {
+        "name": "team-claim",
+        "description": "\"Soft-claim planning artifacts. Use when the user says 'claim this', 'release claim', 'who owns the PRD', or wants soft ownership so teammates do not collide on hot docs.\"",
+        "description_chars": 171,
+        "description_has_angle_brackets": false,
+        "keys": [
+          "description",
+          "name"
+        ]
+      },
+      "is_skill_md": true
+    },
+    {
+      "file": ".memlog.md",
+      "tokens": 214,
+      "token_method": "tiktoken",
+      "sections": [],
+      "table_count": 0,
+      "table_rows": 0,
+      "fenced_block_count": 0,
+      "allcaps_directive_count": 0,
+      "numbered_prefix_filename": false,
+      "waste_patterns": [],
+      "back_references": [],
+      "frontmatter": {
+        "name": "",
+        "description": "",
+        "description_chars": 0,
+        "description_has_angle_brackets": false,
+        "keys": [
+          "topic",
+          "updated"
+        ]
+      },
+      "is_skill_md": false
+    }
+  ]
+}

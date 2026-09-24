@@ -1,0 +1,70 @@
+{
+  "scanner": "workflow-integrity-prepass",
+  "script": "prepass-workflow-integrity.py",
+  "version": "1.0.0",
+  "skill_path": "/workspaces/bmad-multi-user/skills/team-claim",
+  "timestamp": "2026-09-24T18:21:47.356269+00:00",
+  "status": "pass",
+  "metadata": {
+    "frontmatter": {
+      "name": "team-claim",
+      "description": "Soft-claim planning artifacts. Use when the user says 'claim this', 'release claim', 'who owns the PRD', or wants soft ownership so teammates do not collide on hot docs."
+    },
+    "sections": [
+      {
+        "level": 2,
+        "title": "Overview",
+        "line": 8
+      },
+      {
+        "level": 2,
+        "title": "Resolution rules",
+        "line": 14
+      },
+      {
+        "level": 2,
+        "title": "On Activation",
+        "line": 20
+      },
+      {
+        "level": 2,
+        "title": "Headless envelope",
+        "line": 28
+      },
+      {
+        "level": 2,
+        "title": "Claim",
+        "line": 34
+      },
+      {
+        "level": 2,
+        "title": "Release",
+        "line": 48
+      },
+      {
+        "level": 2,
+        "title": "Check / list (conflict warn)",
+        "line": 56
+      }
+    ],
+    "workflow_type": "simple-workflow"
+  },
+  "stage_summary": {
+    "total_stages": 0,
+    "referenced": [],
+    "actual": [],
+    "missing_stages": [],
+    "orphaned_stages": []
+  },
+  "prompt_details": [],
+  "issues": [],
+  "summary": {
+    "total_issues": 0,
+    "by_severity": {
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    }
+  }
+}

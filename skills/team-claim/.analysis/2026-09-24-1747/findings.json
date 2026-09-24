@@ -1,0 +1,132 @@
+{
+  "schema_version": 2,
+  "subject": "/workspaces/bmad-multi-user/skills/team-claim",
+  "generated": "2026-09-24T17:48:00Z",
+  "verdict": "Lean soft-ownership board with solid claims.py; two highs — builder .memlog.md at root and on_complete underwired beyond interactive Claim.",
+  "grade": "fair",
+  "summary": "team-claim matches sibling soft-skill shape: claims.py owns claim/release/check/list, SKILL.md judges intent and soft UX, customize.toml is universal-only. Ship polish: wire on_complete on every terminal, trim headless JSON ceremony and vague soft-offer check, and accept (or exclude) builder .memlog.md like siblings.",
+  "standards": {
+    "canon": "/workspaces/bmad-multi-user/.agents/skills/bmad-workflow-builder/references/prompt-quality-canon.md",
+    "principles": "/workspaces/bmad-multi-user/.agents/skills/bmad-workflow-builder/references/skill-quality-principles.md",
+    "scripts": "/workspaces/bmad-multi-user/.agents/skills/bmad-workflow-builder/references/script-standards.md"
+  },
+  "themes": [
+    {
+      "title": "Terminal-hook and headless contract gaps",
+      "root_cause": "on_complete and headless envelopes are documented for Claim interactive/success paths but not uniformly for Release, Check/list, blocked exits, and list intent — automators and overrides get silent no-ops.",
+      "finding_ids": ["customization-1", "enhancement-2", "leanness-1"],
+      "action": "One terminal rule: after every Claim/Release/Check/list exit (interactive+headless, complete+blocked), run on_complete if set; replace JSON fences with a compact key contract plus list/blocked envelopes."
+    },
+    {
+      "title": "Builder memlog vs path-standards",
+      "root_cause": "Builder process memory lives at skill root as .memlog.md; scanner allows only SKILL.md there — same accepted pattern as team-ready/team-gates/team-status.",
+      "finding_ids": ["architecture-1"],
+      "action": "Leave .memlog.md in place for resume; clear the fail only if ship lint requires excluding it from the root-*.md check or packaged contents."
+    },
+    {
+      "title": "Vague soft-offer and soft restatement",
+      "root_cause": "Soft-offer check after claim is gated by 'when useful'; soft/don't-block is restated after Overview already set the bar.",
+      "finding_ids": ["enhancement-1", "leanness-2"],
+      "action": "Remove soft-offer check (or pin to claimed|takeover only with headless soft_offer); drop soft restatements."
+    }
+  ],
+  "strengths": [
+    "Deterministic claim/release/check/list via claims.py with conflict/--force/takeover",
+    "Soft-only bar in Overview; headless conflict → blocked without inventing ownership",
+    "customize.toml sole mechanism, universal defaults only",
+    "Tokens 1143 under budget; integrity + scripts clean; simple-workflow topology",
+    "Smoke-tested against real planning brief path"
+  ],
+  "recommendations": [
+    {
+      "rank": 1,
+      "action": "Wire {workflow.on_complete} after every terminal Claim/Release/Check/list (interactive+headless); add list + blocked envelopes; compact headless key contract",
+      "resolves": ["customization-1", "enhancement-2", "leanness-1"]
+    },
+    {
+      "rank": 2,
+      "action": "Remove vague soft-offer check (or pin claimed|takeover + soft_offer) and soft restatements",
+      "resolves": ["enhancement-1", "leanness-2"]
+    },
+    {
+      "rank": 3,
+      "action": "Accept or exclude builder .memlog.md from path-standards like siblings",
+      "resolves": ["architecture-1"]
+    }
+  ],
+  "experience": {
+    "journeys": [
+      {
+        "name": "Headless claim free",
+        "steps": "target+actor → claims.py claim → complete JSON with action claimed"
+      },
+      {
+        "name": "Headless claim conflict",
+        "steps": "other actor holds target → blocked JSON conflict true; --force → takeover"
+      },
+      {
+        "name": "Interactive release stale",
+        "steps": "anyone release → claim removed; no actor match required"
+      }
+    ],
+    "headless": "Claim/release/check work when paths explicit; list and some blocked envelopes underspecified; on_complete may no-op outside interactive Claim."
+  },
+  "findings": [
+    {
+      "id": "leanness-1",
+      "lens": "leanness",
+      "severity": "medium",
+      "title": "Headless JSON examples are format ceremony",
+      "location": "SKILL.md:Claim/Release/Check headless blocks",
+      "evidence": "Three near-identical full JSON envelopes with empty claim: {} placeholders. Script JSON already carries action/claim/conflict; skill only adds status/intent/memlog wrapping.",
+      "recommendation": "Replace JSON fences with one headless envelope contract naming required keys and blocked-vs-complete rules; keep script output as field source.",
+      "proposed_smallest": "Headless: emit {status: complete|blocked, intent, target, memlog} plus script fields (action/claim/conflict/released/claimed/reason as applicable). Conflict without --force → blocked; do not invent ownership.",
+      "predicted_delta": "Likely nothing material if consumers read keys not formatting; route to variant eval to confirm."
+    },
+    {
+      "id": "leanness-2",
+      "lens": "leanness",
+      "severity": "low",
+      "title": "Soft/don't-block editing restated after Overview bar",
+      "location": "SKILL.md:Claim interactive; Check bullets",
+      "evidence": "Overview already sets soft-only bar; Claim/Check repeat do-not-hard-block and soft-offer-check-when-useful.",
+      "recommendation": "Drop soft restatements and vague soft-offer-check line; keep conflict/--force/no-silent-overwrite and on_complete where they add non-obvious failure modes."
+    },
+    {
+      "id": "architecture-1",
+      "lens": "architecture",
+      "severity": "high",
+      "title": "Prompt file at skill root: .memlog.md",
+      "location": ".memlog.md",
+      "evidence": "path-standards reports high: .memlog.md at skill root (only SKILL.md allowed). Same builder process-memory convention as team-ready/team-gates/team-status; not workflow content, but scanner still fails.",
+      "recommendation": "Keep as builder memlog beside SKILL.md (do not move to references/). Clear path-standards fail by excluding .memlog.md from root-*.md check or packaged contents if ship lint must be green."
+    },
+    {
+      "id": "customization-1",
+      "lens": "customization",
+      "severity": "high",
+      "title": "on_complete only on interactive Claim",
+      "location": "SKILL.md:Claim; Release; Check / list",
+      "evidence": "customize.toml exposes on_complete. SKILL.md runs {workflow.on_complete} only in Claim Interactive; Release, Check/list, and headless Claim never reference it — override silently no-ops.",
+      "recommendation": "After every successful and blocked-as-terminal Claim/Release/Check/list exit—interactive and headless—run {workflow.on_complete} if non-empty."
+    },
+    {
+      "id": "enhancement-1",
+      "lens": "enhancement",
+      "severity": "medium",
+      "title": "remove or pin vague soft-offer check after claim",
+      "location": "SKILL.md:Claim",
+      "evidence": "Soft-offer check after successful claim gated only by 'only when useful'; headless success has no soft_offer. Successful claim JSON already confirms the write.",
+      "recommendation": "Remove soft-offer check, or pin to action claimed|takeover only with headless soft_offer: check; omit on already and conflict-blocked."
+    },
+    {
+      "id": "enhancement-2",
+      "lens": "enhancement",
+      "severity": "medium",
+      "title": "add missing headless envelopes for list and non-claim failures",
+      "location": "SKILL.md:Release; SKILL.md:Check / list",
+      "evidence": "list is a first-class intent but only check headless success is documented; Release/check omit blocked envelopes that siblings provide per intent.",
+      "recommendation": "Add headless complete for list; add blocked JSON for release and check/list script-or-path failures with matching intent."
+    }
+  ]
+}
