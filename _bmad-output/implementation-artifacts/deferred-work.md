@@ -14,3 +14,8 @@
 - source_spec: `_bmad-output/implementation-artifacts/spec-1-2-single-gate-evaluator-cli-entrypoint.md`
   summary: Document or stub the future Hard Block plug-in site on `evaluate()` so Stories 1.3 / Epic 3 know where rules attach.
   evidence: Pass-substrate only discards `project_root`/`story`; no named extension seam yet — intentional for 1.2 scope; hooks and real rules come later.
+  status: open
+
+## Deferred from: code review of spec-1-2-single-gate-evaluator-cli-entrypoint.md (2026-09-25)
+
+- JSON field semantics (`message` vs `warnings` vs `reasons`) for Hard Block callers — undefined beyond pass-substrate; leave until Epic 3 rules define which field carries block reasons. Evidence would settle earlier only if a hook already consumes these fields differently.

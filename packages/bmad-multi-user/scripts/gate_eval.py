@@ -75,8 +75,35 @@ def evaluate(*, project_root: Path, story: str | None) -> dict:
     )
 
 
+def _peek_option(argv: list[str] | None, option: str) -> str | None:
+    """Return the value following ``option`` in argv, if present."""
+    if not argv:
+        return None
+    for i, arg in enumerate(argv):
+        if arg == option and i + 1 < len(argv):
+            return argv[i + 1]
+        prefix = f"{option}="
+        if arg.startswith(prefix):
+            return arg[len(prefix) :] or None
+    return None
+
+
+def _project_root_path(value: str) -> Path:
+    if not value.strip():
+        raise argparse.ArgumentTypeError("project-root is empty")
+    return Path(value)
+
+
 class _JsonArgumentParser(argparse.ArgumentParser):
     """Emit machine-readable JSON on usage errors (exit 2)."""
+
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        self._argv_for_errors: list[str] | None = None
+
+    def parse_args(self, args=None, namespace=None):  # type: ignore[override]
+        self._argv_for_errors = list(sys.argv[1:] if args is None else args)
+        return super().parse_args(args, namespace)
 
     def error(self, message: str) -> None:  # type: ignore[override]
         sys.stderr.write(f"error: {message}\n")
@@ -85,10 +112,25 @@ class _JsonArgumentParser(argparse.ArgumentParser):
                 ok=False,
                 mode=None,
                 message=message,
+                story=_peek_option(self._argv_for_errors, "--story"),
                 error=message,
             )
         )
         self.exit(2)
+
+
+def _emit_usage_error(*, message: str, story: str | None) -> int:
+    sys.stderr.write(f"error: {message}\n")
+    write_json_stdout(
+        result_payload(
+            ok=False,
+            mode=None,
+            message=message,
+            story=story,
+            error=message,
+        )
+    )
+    return 2
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -104,7 +146,7 @@ def main(argv: list[str] | None = None) -> int:
         "--project-root",
         "-p",
         required=True,
-        type=Path,
+        type=_project_root_path,
         help="Absolute or relative path to the project root",
     )
     parser.add_argument(
@@ -117,20 +159,20 @@ def main(argv: list[str] | None = None) -> int:
     )
     args = parser.parse_args(argv)
 
-    project_root = args.project_root.expanduser().resolve()
-    if not project_root.is_dir():
-        err = f"project root is not a directory: {project_root}"
-        sys.stderr.write(f"error: {err}\n")
-        write_json_stdout(
-            result_payload(
-                ok=False,
-                mode=None,
-                message=err,
-                story=args.story,
-                error=err,
-            )
+    try:
+        project_root = args.project_root.expanduser().resolve()
+        is_dir = project_root.is_dir()
+    except OSError as exc:
+        return _emit_usage_error(
+            message=f"project root is not accessible: {exc}",
+            story=args.story,
         )
-        return 2
+
+    if not is_dir:
+        return _emit_usage_error(
+            message=f"project root is not a directory: {project_root}",
+            story=args.story,
+        )
 
     result = evaluate(project_root=project_root, story=args.story)
     for warning in result.get("warnings") or []:
