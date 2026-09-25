@@ -13,6 +13,7 @@ import tempfile
 from pathlib import Path
 
 SCRIPT = Path(__file__).resolve().parents[1] / "gate_eval.py"
+CLI_VERSION = "0.1.0"
 
 
 def run(args: list[str]) -> subprocess.CompletedProcess[str]:
@@ -49,8 +50,8 @@ def main() -> int:
             failures.append(f"reasons={payload.get('reasons')!r}, want []")
         if payload.get("story") != story_id:
             failures.append(f"story={payload.get('story')!r}, want {story_id!r}")
-        if not payload.get("version"):
-            failures.append("version missing")
+        if payload.get("version") != CLI_VERSION:
+            failures.append(f"version={payload.get('version')!r}, want {CLI_VERSION!r}")
         warnings = payload.get("warnings")
         if not isinstance(warnings, list) or not warnings:
             failures.append(f"warnings={warnings!r}, want non-empty list")
@@ -60,6 +61,25 @@ def main() -> int:
             failures.append("stderr missing warning: prefix")
         if "no gate rules loaded" not in ok.stderr:
             failures.append("stderr missing human pass-substrate message")
+
+        no_story = run(["-p", str(root)])
+        if no_story.returncode != 0:
+            failures.append(f"no --story exit {no_story.returncode}, want 0")
+        try:
+            no_story_payload = json.loads(no_story.stdout)
+        except json.JSONDecodeError as err:
+            failures.append(f"no --story stdout not JSON: {err}")
+            no_story_payload = {}
+        if no_story_payload.get("ok") is not True:
+            failures.append(f"no --story ok={no_story_payload.get('ok')!r}, want True")
+        if no_story_payload.get("mode") != "pass_substrate":
+            failures.append(f"no --story mode={no_story_payload.get('mode')!r}")
+        if no_story_payload.get("story") is not None:
+            failures.append(
+                f"no --story story={no_story_payload.get('story')!r}, want null"
+            )
+        if no_story_payload.get("version") != CLI_VERSION:
+            failures.append(f"no --story version={no_story_payload.get('version')!r}")
 
         missing = run(["--project-root", str(root / "does-not-exist")])
         if missing.returncode != 2:
@@ -73,8 +93,10 @@ def main() -> int:
             failures.append(f"missing root ok={err_payload.get('ok')!r}, want False")
         if not err_payload.get("error"):
             failures.append("missing root error field empty")
-        if err_payload.get("version") is None:
-            failures.append("missing root version missing")
+        if err_payload.get("version") != CLI_VERSION:
+            failures.append(f"missing root version={err_payload.get('version')!r}")
+        if "error:" not in missing.stderr:
+            failures.append("missing root stderr missing error: prefix")
 
         no_arg = run([])
         if no_arg.returncode != 2:
@@ -88,6 +110,45 @@ def main() -> int:
             failures.append(f"usage ok={usage_payload.get('ok')!r}, want False")
         if not usage_payload.get("error"):
             failures.append("usage error field empty")
+        if "error:" not in no_arg.stderr:
+            failures.append("usage stderr missing error: prefix")
+
+        empty_root = run(["-p", "", "--story", story_id])
+        if empty_root.returncode != 2:
+            failures.append(f"empty -p exit {empty_root.returncode}, want 2")
+        try:
+            empty_payload = json.loads(empty_root.stdout)
+        except json.JSONDecodeError as err:
+            failures.append(f"empty -p stdout not JSON: {err}")
+            empty_payload = {}
+        if empty_payload.get("ok") is not False:
+            failures.append(f"empty -p ok={empty_payload.get('ok')!r}, want False")
+        if empty_payload.get("story") != story_id:
+            failures.append(
+                f"empty -p story={empty_payload.get('story')!r}, want {story_id!r}"
+            )
+        if "error:" not in empty_root.stderr:
+            failures.append("empty -p stderr missing error: prefix")
+        if "empty" not in (empty_payload.get("error") or "").lower():
+            failures.append(
+                f"empty -p error={empty_payload.get('error')!r}, want empty mention"
+            )
+
+        usage_with_story = run(["--story", story_id])
+        if usage_with_story.returncode != 2:
+            failures.append(f"usage+story exit {usage_with_story.returncode}, want 2")
+        try:
+            usage_story_payload = json.loads(usage_with_story.stdout)
+        except json.JSONDecodeError as err:
+            failures.append(f"usage+story stdout not JSON: {err}")
+            usage_story_payload = {}
+        if usage_story_payload.get("story") != story_id:
+            failures.append(
+                f"usage+story story={usage_story_payload.get('story')!r}, "
+                f"want {story_id!r}"
+            )
+        if "error:" not in usage_with_story.stderr:
+            failures.append("usage+story stderr missing error: prefix")
 
     if failures:
         sys.stderr.write("FAIL:\n" + "\n".join(f"- {f}" for f in failures) + "\n")

@@ -51,6 +51,7 @@ context:
 - Review patches: `--help` epilog documents pass-substrate + JSON schema; self-check and README contracts tightened.
 - Verified: CLI exit 0 + JSON; self-test `ok`; Core vendor path audit empty.
 - Human renegotiation during walkthrough: added `story`/`version`/`warnings`/`error` to JSON; pass-substrate warning mode; JSON on exit-2 paths; clarified `--story` as echo-only until gating.
+- Review patches (post CR): empty `-p` rejected; OSError → exit-2 JSON; usage errors preserve `--story`; self-check covers no-`--story`, `version == 0.1.0`, stderr `error:`; deferred-work seam entry marked `status: open`.
 
 ## Review Triage Log
 
@@ -63,3 +64,21 @@ context:
 - low (rejected) — Blind: usage/runtime errors emit no JSON on stdout — Frozen contract: JSON for evaluation results; exit 2 + stderr for usage/runtime; callers check returncode first.
 - false — Blind: status still in-progress while notes claim verified — Mid-oneshot before Finalize; now set `done` / sprint `review`.
 - maybe-false → defer — Blind: `evaluate()` lacks named Hard Block plug-in seam — Deferred; 1.2 pass-substrate only; rules attach in later epics.
+
+### Review Findings
+
+- [x] [Review][Patch] Self-check misses documented CLI contract (no-`--story` path, stderr `error:` prefix, `version == "0.1.0"`) [`packages/bmad-multi-user/scripts/tests/test_gate_eval.py`]
+- [x] [Review][Patch] Empty `--project-root` resolves to cwd and exits 0 [`packages/bmad-multi-user/scripts/gate_eval.py:120`]
+- [x] [Review][Patch] `resolve()` / `is_dir()` OSError escapes exit-2 JSON path [`packages/bmad-multi-user/scripts/gate_eval.py:120`]
+- [x] [Review][Patch] Usage-error JSON drops provided `--story` [`packages/bmad-multi-user/scripts/gate_eval.py:81`]
+- [x] [Review][Patch] Deferred-work Hard Block seam entry lacks `status:` [`_bmad-output/implementation-artifacts/deferred-work.md`]
+- [x] [Review][Defer] JSON field semantics (`message` vs `warnings` vs `reasons`) undefined for Hard Block callers [`packages/bmad-multi-user/scripts/gate_eval.py`] — deferred: intentional until real gate rules land (Epic 3); pass-substrate leaves `reasons` empty by design
+
+#### Rejected
+
+- false — Exit code `1` documented but unreachable: `main` already returns `1` when `ok` is false (`gate_eval.py:140`); pass-substrate correctly never sets that.
+- false — Spec `status: done` vs sprint `review`: expected BMAD state while code review runs.
+- false (spec edit) — Implementation Notes / Review Triage Log contradict exit-2 JSON contract: fix would edit the spec under review; frozen OUTPUT + code/README/tests already agree on JSON on exit 2.
+- low — Self-check uses `sys.executable` not `uv run`: stdlib script behaves the same; forcing `uv` adds ceremony without catching a real regression.
+- low — README Layout omits `scripts/tests/`: Evaluator section already documents the self-check path.
+- low — stdout UTF-8 reconfigure without matching stderr: rare encoding divergence; not worth dual-stream complexity now.
