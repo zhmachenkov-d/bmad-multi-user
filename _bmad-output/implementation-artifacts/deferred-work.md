@@ -19,3 +19,8 @@
 ## Deferred from: code review of spec-1-2-single-gate-evaluator-cli-entrypoint.md (2026-09-25)
 
 - JSON field semantics (`message` vs `warnings` vs `reasons`) for Hard Block callers — undefined beyond pass-substrate; leave until Epic 3 rules define which field carries block reasons. Evidence would settle earlier only if a hook already consumes these fields differently.
+
+## Deferred from: code review of spec-1-3-custom-hook-templates-for-build-correct-course.md (2026-09-25)
+
+- Hard Block hook composition / template↔Pilot sync unpinned by automated tests — no test asserts merged `activation_steps_prepend` names `gate_eval.py` or that Pilot `_bmad/custom` twins match SoT templates; park in Story 1.4 install/smoke per Intent.
+- Canonical templates hardcode Pilot PACKAGE_ROOT (`packages/bmad-multi-user/…`); README Custom hooks understates retarget-before-copy for other layouts — TOML already has retarget comment; full install docs are Story 1.4.

@@ -48,7 +48,7 @@ context:
 - README documents templates path (all three skills), Pilot install location, SoT/re-copy note, and defers full install/smoke to Story 1.4.
 - Verified: TOML parse OK for templates + install copies; `resolve_customization.py` merges prepend for `bmad-build`, `bmad-build-auto`, and `bmad-correct-course` (1 step each); `gate_eval` exit 0 pass-substrate.
 - Core-untouched audit: `git status --short` on `.agents/skills/bmad-{build,build-auto,correct-course}`, `_bmad/scripts`, `_bmad/core`, `_bmad/bmm`, `_bmad/config.toml` — empty (exit 0).
-- Review patches: fail-closed parse rules; PACKAGE_ROOT retarget comments; README Layout + SoT alignment; Implementation Notes evidence for all three resolvers.
+- Review patches: fail-closed parse rules; PACKAGE_ROOT retarget comments; README Layout + SoT alignment; Implementation Notes evidence for all three resolvers; post-CR harden HALT for non-boolean `ok` (templates + Pilot).
 
 ## Review Triage Log
 
@@ -62,3 +62,22 @@ context:
 - false — Blind: Approach says “identical” but halt labels differ — Decisions require same CLI + HALT rules; only skill name in halt sentence may differ (parity comment added).
 - low (rejected) — Blind: README omits “not git hooks” restatement — Intent Always + AD-2 already cover; Story 1.4 owns install ceremony surface.
 - low (patch) — Blind: Core-untouched asserted without audit command — Recorded empty `git status` audit paths in Implementation Notes.
+
+### Review Findings
+
+- [x] [Review][Patch] Strengthen HALT when `ok` is present but not a JSON boolean [`packages/bmad-multi-user/templates/_bmad/custom/bmad-build.toml:12`] — applied: halt list now includes `ok` is not a JSON boolean across templates + Pilot copies
+- [x] [Review][Defer] Hard Block hook composition / template↔Pilot sync unpinned by automated tests — deferred: Intent/README park install/composition smoke in Story 1.4; `test_gate_eval.py` only covers CLI
+- [x] [Review][Defer] Canonical templates hardcode Pilot PACKAGE_ROOT; README Custom hooks understates retarget-before-copy for other layouts — deferred: TOML retarget comment + Story 1.4 owns full install path docs
+
+#### Rejected
+
+- false — Spec `status: done` vs sprint `review`: expected handoff (impl done, awaiting code review), not a defect
+- false — Frozen Approach “identical” vs differing halt skill names: Decisions + parity comments already define semantic identity (same CLI + HALT rules)
+- false — README “runs/HALTs” vs LLM soft composition: Custom hooks already say “activation step” and compose via `_bmad/custom`
+- false — Warning handling untied from 1.2 contract: `gate_eval.py` emits `warning:` / `warnings`; README Evaluator section documents the same shape
+- false — Manual resolver/TOML evidence only in Implementation Notes: allowed for 1.3; Intent does not require golden merge fixtures
+- false — README omits `*.user.toml` warning: Intent Never constrains this story’s implementer, not end-user customize docs
+- false — Sprint `backlog`→`review` handoff underspecified: normal BMAD review gate, not a code defect
+- low (rejected) — `review_loop_iteration: 0` stale: fix would edit the spec under review
+- low (rejected) — README omits explicit `uv` prerequisite: Evaluator section already shows `uv run`; package users already need `uv`
+- low (rejected) — No timeout if `uv run` never returns: LLM instruction cannot mechanically enforce timeout; current pass-substrate returns immediately; guard adds complexity without demonstrated hang path

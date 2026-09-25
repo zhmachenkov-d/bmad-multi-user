@@ -10,5 +10,5 @@
 [workflow]
 
 activation_steps_prepend = [
-  """Run `uv run "{project-root}/packages/bmad-multi-user/scripts/gate_eval.py" --project-root "{project-root}"`. Require non-empty stdout that parses as JSON with a boolean `ok` field. If the command exit code is non-zero, or stdout is empty/non-JSON/missing `ok`, or `ok` is false, HALT immediately and report stderr plus any JSON `message`/`reasons`/`error` fields — do not continue Correct-Course. If exit 0 and `ok` is true, surface any stderr `warning:` lines and JSON `warnings` to the user, then continue (pass-substrate may warn while rules are inactive).""",
+  """Run `uv run "{project-root}/packages/bmad-multi-user/scripts/gate_eval.py" --project-root "{project-root}"`. Require non-empty stdout that parses as JSON with a boolean `ok` field. If the command exit code is non-zero, or stdout is empty/non-JSON/missing `ok`, or `ok` is not a JSON boolean, or `ok` is false, HALT immediately and report stderr plus any JSON `message`/`reasons`/`error` fields — do not continue Correct-Course. If exit 0 and `ok` is true, surface any stderr `warning:` lines and JSON `warnings` to the user, then continue (pass-substrate may warn while rules are inactive).""",
 ]
