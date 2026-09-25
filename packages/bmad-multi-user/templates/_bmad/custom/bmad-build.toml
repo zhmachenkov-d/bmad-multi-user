@@ -1,0 +1,14 @@
+# Team override: Hard Block preflight via Module gate evaluator (Story 1.3).
+# Canonical template: packages/bmad-multi-user/templates/_bmad/custom/bmad-build.toml
+# Do not edit installer-owned .agents/skills/bmad-build/** — compose here instead.
+#
+# Evaluator path is the Pilot PACKAGE_ROOT layout (packages/bmad-multi-user/).
+# Retarget the script path when installing the Module elsewhere (Story 1.4).
+# Parity: same CLI + HALT rules across bmad-build / bmad-build-auto / bmad-correct-course;
+# only the skill name in the halt sentence may differ.
+
+[workflow]
+
+activation_steps_prepend = [
+  """Run `uv run "{project-root}/packages/bmad-multi-user/scripts/gate_eval.py" --project-root "{project-root}"`. Require non-empty stdout that parses as JSON with a boolean `ok` field. If the command exit code is non-zero, or stdout is empty/non-JSON/missing `ok`, or `ok` is false, HALT immediately and report stderr plus any JSON `message`/`reasons`/`error` fields — do not continue Build. If exit 0 and `ok` is true, surface any stderr `warning:` lines and JSON `warnings` to the user, then continue (pass-substrate may warn while rules are inactive).""",
+]
