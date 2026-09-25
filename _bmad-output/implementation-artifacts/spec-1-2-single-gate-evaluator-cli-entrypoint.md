@@ -23,9 +23,9 @@ context:
 
 - ENTRYPOINT: `packages/bmad-multi-user/scripts/gate_eval.py` (snake_case; single CLI; helpers may be sibling modules, never a second public gate CLI).
 - PACKAGING: PEP 723 inline metadata, `requires-python = ">=3.11"`, stdlib only — no `pyproject.toml` in this story.
-- OUTPUT: JSON object on stdout (`ok`, `mode`, `message`, `reasons`); human one-liner on stderr; diagnostics on stderr. Exit codes: `0` pass, `1` fail/block, `2` usage/runtime error (script-standards).
-- CLI SURFACE: `--project-root` / `-p` required; optional `--story` accepted but unused in pass-substrate (forward-compatible for 1.3+). `--help` via argparse. No network, no interactive prompts.
-- PASS_SUBSTRATE: Always `ok: true`, `mode: "pass_substrate"`, message stating no gate rules loaded; exit `0`. Real Hard Block rules are out of scope.
+- OUTPUT: JSON on stdout for success and usage/runtime errors (`ok`, `mode`, `message`, `reasons`, `story`, `version`, `warnings`, `error`); human lines on stderr (`warning:` / message, or `error:`). Exit codes: `0` pass (may warn), `1` fail/block, `2` usage/runtime error (script-standards).
+- CLI SURFACE: `--project-root` / `-p` required; optional `--story` echoed in JSON as `story` and not used for gating until Hard Block rules. `--help` via argparse. No network, no interactive prompts. `version` is CLI constant `0.1.0`.
+- PASS_SUBSTRATE: `ok: true`, `mode: "pass_substrate"`, exit `0`, plus non-empty `warnings[]` and stderr `warning:` so callers see rules are inactive (not silent green). Real Hard Block rules are out of scope.
 - CONTINUITY: Pin `packages/bmad-multi-user/` as PACKAGE_ROOT in `epic-1-context.md` Technical Decisions (deferred from 1.1). Update package README to name the entrypoint. Leave `skills/team-*` and Core vendor paths untouched.
 
 **Always:**
@@ -50,6 +50,7 @@ context:
 - Pinned PACKAGE_ROOT + gate_eval path in `epic-1-context.md`; marked matching deferred-work entries resolved.
 - Review patches: `--help` epilog documents pass-substrate + JSON schema; self-check and README contracts tightened.
 - Verified: CLI exit 0 + JSON; self-test `ok`; Core vendor path audit empty.
+- Human renegotiation during walkthrough: added `story`/`version`/`warnings`/`error` to JSON; pass-substrate warning mode; JSON on exit-2 paths; clarified `--story` as echo-only until gating.
 
 ## Review Triage Log
 

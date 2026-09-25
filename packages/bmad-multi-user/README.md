@@ -16,12 +16,12 @@ From the repository root:
 ```bash
 uv run packages/bmad-multi-user/scripts/gate_eval.py --project-root .
 # equivalent: -p .
-# optional: --story <sprint-status-key> (accepted; unused in pass-substrate)
+# optional: --story <sprint-status-key> (echoed in JSON; unused for gating yet)
 ```
 
-- **Stdout:** JSON `{ok, mode, message, reasons}`
-- **Stderr:** human one-liner (success) or error text
-- **Exit codes:** `0` pass, `1` fail/block, `2` usage/runtime error
+- **Stdout:** JSON `{ok, mode, message, reasons, story, version, warnings, error}` (also on usage/runtime errors)
+- **Stderr:** `warning:` lines + human one-liner (success), or `error:` text (failure)
+- **Exit codes:** `0` pass (may include warnings), `1` fail/block, `2` usage/runtime error
 
 Self-check:
 
