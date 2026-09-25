@@ -34,7 +34,7 @@
   "mounts": [
     "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached,readonly=true"
   ],
-  "runArgs": ["--env-file", "${localWorkspaceFolder}/.devcontainer/.env"],
+  "runArgs": ["--env-file", "${localWorkspaceFolder}/.env"],
   "postCreateCommand": "bash .devcontainer/post-create.sh",
   "customizations": {
     "vscode": {
